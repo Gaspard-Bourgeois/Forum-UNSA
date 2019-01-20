@@ -1,6 +1,6 @@
 <?php
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -8,7 +8,7 @@ include('stock.php');
 if(!isset($_GET['code']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
@@ -16,7 +16,7 @@ $code = htmlspecialchars($_GET['code']);
 
 //doit rajouter une securisation de get
 
-//securité pour transformer en nombre
+//securit&eacute; pour transformer en nombre
 
 if(!isset($notification))
 {
@@ -84,7 +84,7 @@ else
 {
 	$passage_ligne = "\n";
 }
-//=====Déclaration des messages au format texte et au format HTML.
+//=====D&eacute;claration des messages au format texte et au format HTML.
 $message_txt = '
 
 
@@ -128,7 +128,7 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
        <title>Information</title>
        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
    </head>
-<body>
+</head><body>
 
 <table>
 
@@ -176,20 +176,20 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
 </html>';
 //==========
 
-//=====Création de la boundary
+//=====Cr&eacute;ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
 $sujet= ''.$info['prenom'].' '.$info['nom'].'';
 
-//=====Création du header de l'e-mail.
-$header = "From: \"Petit nouveau\"<unsa@gmail.com>".$passage_ligne;
-$header.= "Reply-to: \"Eviter de répondre\" <unsa@gmail.com>".$passage_ligne;
+//=====Cr&eacute;ation du header de l'e-mail.
+$header = "From: \"Petit nouveau\"<forum-unsa.fr@gmail.com>".$passage_ligne;
+$header.= "Reply-to: \"Eviter de r&eacute;pondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Cr&eacute;ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
@@ -213,7 +213,7 @@ $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 
 if(mail($mail, $sujet, $message, $header) AND isset($correct))
 {
-$notification = 'Votre compte a bien été confirmer, un admin va au plus vite rendre votre compte opérationnel. Un mail vous sera envoyer pour vous prevenir.';
+$notification = 'Votre compte a bien &eacute;t&eacute; confirmer, un admin va au plus vite rendre votre compte op&eacute;rationnel. Un mail vous sera envoyer pour vous prevenir.';
 
 }
 elseif(isset($correct))
@@ -269,7 +269,7 @@ $admin->closeCursor();
 $titre = 'Confirmation de compte';
 include('head.php');
 ?>
-<body>
+</head><body>
 
 
 
@@ -278,7 +278,7 @@ include('head.php');
 <p><i><?php echo $notification;?></i></p>
 
 <p>Si vous n'arrivez pas à valider votre compte, verifier bien l'url du lien que vous avez saisie.</p>
-<p>Sinon votre compte n'a pas été creer, je vous invite donc à le faire, <a href="inscription.php">ici</a></p>
+<p>Sinon votre compte n'a pas &eacute;t&eacute; creer, je vous invite donc à le faire, <a href="inscription.php">ici</a></p>
 
 
 

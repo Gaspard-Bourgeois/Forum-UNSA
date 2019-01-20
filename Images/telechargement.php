@@ -1,6 +1,7 @@
 <?php
+
 session_start();
-if(isset($_SESSION['permission']))
+if(isset($_SESSION['spermission']))
 {
 
 
@@ -10,13 +11,15 @@ if(!empty($_GET['fichier']))
 $fichier = htmlspecialchars($_GET['fichier']);
 $type = htmlspecialchars($_GET['type']);
 
-if(!preg_match("#^music$|^fichier$|^film$|^ti$#", $type))
+if(!preg_match("#^music$|^fichier$|^film$|^ti$|^dm$#", $type))
 {
 
 echo 'Votre lien est mort.';
 }
 else
 {
+
+
 $fichier = preg_replace("#%20#", '[ ]{1}', $fichier);
 $folder = $type;
 
@@ -74,7 +77,7 @@ echo 'adresse invalide.';
 }
 else
 {
-echo 'Vous devez être connecter pour acceder au fichier';
+echo 'Vous devez &ecirc;tre connecter pour acceder au fichier';
 }
-echo 'Erreur lors de la tentative de téléchargement';
+echo 'Erreur lors de la tentative de t&eacute;l&eacute;chargement';
 ?>

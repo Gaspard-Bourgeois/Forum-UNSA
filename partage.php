@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -23,19 +23,19 @@ if(!isset($_GET['theme']))
 {
 $notification = 'adresse invalide.';
 
-echo 'Il n\'y a rien a affiché ici.';
+echo 'Il n\'y a rien a affich&eacute; ici.';
 }
 elseif(!preg_match("#^dm$|^cour$|^revision$|^ti$#", $theme))
 {
 $notification = 'adresse invalide.';
 
-echo 'Il n\'y a rien a affiché ici.';
+echo 'Il n\'y a rien a affich&eacute; ici.';
 
 }
 else
 {
 
-//traite les donnée lié à la page
+//traite les donn&eacute;e li&eacute; à la page
 $var1 = $theme;
 
 
@@ -105,7 +105,7 @@ while($simil = $verif->fetch())
 
 if($simil['streaming'] == $chemin)
 {
-$notification = 'Vous avez déja poster ce fichier';
+$notification = 'Vous avez d&eacute;ja poster ce fichier';
 }
 
 
@@ -143,20 +143,55 @@ else
 
 //envoie de la fichier
 
-if($var1 == 'ti')
-{
+
 
 $fold = $var1;
 
-}
-else
-{
-$fold = 'fichier';
-}
 
 
+
+ if($extension_upload == 'zip')
+ {
+
+ $fichier = $_FILES['fichier']['tmp_name'];
+
+function unzip($fichier){
+     $zip = zip_open($fichier);
+     if(is_resource($zip)){
+         $tree = "";
+         while(($zip_entry = zip_read($zip)) !== false){
+             echo "Unpacking ".zip_entry_name($zip_entry)."\n";
+             if(strpos(zip_entry_name($zip_entry), DIRECTORY_SEPARATOR) !== false){
+                 $last = strrpos(zip_entry_name($zip_entry), DIRECTORY_SEPARATOR);
+                 $dir = substr(zip_entry_name($zip_entry), 0, $last);
+                 $fichier = substr(zip_entry_name($zip_entry), strrpos(zip_entry_name($zip_entry), DIRECTORY_SEPARATOR)+1);
+                 if(!is_dir($dir)){
+                     @mkdir($dir, 0755, true) or die("Unable to create $dir\n");
+                 }
+                 if(strlen(trim($fichier)) > 0){
+                     $return = @file_put_contents($dir."/".$fichier, zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+                     if($return === false){
+                         die("Unable to write file $dir/$fichier\n");
+                     }
+                 }
+             }else{
+                 file_put_contents($fichier, zip_entry_read($zip_entry, zip_entry_filesize($zip_entry)));
+             }
+         }
+     }else{
+         echo "Unable to open zip file\n";
+     }
+ }
+
+
+
+ }
+ else
+ {
 
   $trajet = 'Images/'.$fold.'/'.$adresse.'.'.$extension_upload.'';
+
+
 
 if(move_uploaded_file($_FILES['fichier']['tmp_name'],$trajet))
 {
@@ -168,7 +203,7 @@ $envoyefichier = 'ok';
 
 
 }//fin de l'envoie
-
+}
 
 }//fin de traitement de l'envoie
 
@@ -177,7 +212,7 @@ $envoyefichier = 'ok';
 
 
 
-}//fin du si formulaire envoyé
+}//fin du si formulaire envoy&eacute;
 
 
 
@@ -191,7 +226,7 @@ $envoyefichier = 'ok';
 
 
 
-//=================================================traite les donnée du formulaire decriptif  ===========================================
+//=================================================traite les donn&eacute;e du formulaire decriptif  ===========================================
 
 
 $message = 'erreur';
@@ -203,7 +238,7 @@ $descri = htmlspecialchars($_POST['descri']);//descri
 
 if (empty($titre) OR empty($descri))
 {
-$notification = 'Tout les champs doivent être remplis.';
+$notification = 'Tout les champs doivent &ecirc;tre remplis.';
 }
 
 
@@ -216,7 +251,7 @@ $notification = 'Vous ne pouvez commencer votre Question par un espace.';
 
 elseif(!preg_match("#^.{3,}#", $descri))
 {
-$notification = 'Votre Qestion doit avoir une longueur minimum de 10 caracthères.';
+$notification = 'Votre Qestion doit avoir une longueur minimum de 10 caracth&egrave;res.';
 }
 
 
@@ -227,7 +262,7 @@ $notification = 'Votre Titre ne peut pas commencer par un espace.';
 
 elseif(!preg_match("#^.{2,}#", $titre))
 {
-$notification = 'Votre Titre doit avoir une longueur minimum de 2 caracthères.';
+$notification = 'Votre Titre doit avoir une longueur minimum de 2 caracth&egrave;res.';
 }
 
 
@@ -239,7 +274,7 @@ else//si aucune erreur
 
 
 
-//verifier si déja envoyé !
+//verifier si d&eacute;ja envoy&eacute; !
 $req = $basedonnees ->query('SELECT titre, contenu FROM lien');
 
 while($meme = $req ->fetch())
@@ -247,7 +282,7 @@ while($meme = $req ->fetch())
 
 if($titre == $meme['titre'] AND $decri == $meme['contenu'])
 {
-$notification = 'Ce message existe déjà sur le forum.';
+$notification = 'Ce message existe d&eacute;jà sur le forum.';
 }
 
 }
@@ -271,7 +306,7 @@ $envoyetxt= 'ok';
 
 
 
-//============================================================================  traite les donnée du texte ==============================
+//============================================================================  traite les donn&eacute;e du texte ==============================
 $text= 'aucun';
 
 $titretexte = htmlspecialchars($_POST['titretexte']);
@@ -281,13 +316,13 @@ if(!empty($titretexte))
 
 
 $text = 'erreur';
-if(!preg_match("#[a-zA-Z0-9éèà]#", $titretexte))
+if(!preg_match("#[a-zA-Z0-9&eacute;&egrave;à]#", $titretexte))
 {
-$notification = 'Le titre de votre texte facultatif ne doit pas contenir de metacaracthère.';
+$notification = 'Le titre de votre texte facultatif ne doit pas contenir de metacaracth&egrave;re.';
 }
-elseif(!preg_match("#[a-zA-Z0-9éèà]#", $texte))
+elseif(!preg_match("#[a-zA-Z0-9&eacute;&egrave;à]#", $texte))
 {
-$notification = 'Votre texte facultatif ne doit pas contenir de metacaracthère.';
+$notification = 'Votre texte facultatif ne doit pas contenir de metacaracth&egrave;re.';
 }
 else
 {
@@ -363,13 +398,13 @@ $message = 'succes';
 
 
 
-$bdd1 = $basedonnees->prepare('SELECT id FROM lien WHERE titre = ? AND contenu = ?');
-$bdd1->execute(array($titre, $descri));
-while($bdd1_i = $bdd1->fetch())
+$bdd2 = $basedonnees->prepare('SELECT id FROM lien WHERE titre = ? AND contenu = ?');
+$bdd2->execute(array($titre, $descri));
+while($bdd2_i = $bdd2->fetch())
 {
-$rick = $bdd1_i['id'];
+$rick = $bdd2_i['id'];
 }
-$bdd1->closeCursor();
+$bdd2->closeCursor();
 
 
 
@@ -386,8 +421,8 @@ if(isset($envoyefichier))//fichier
 
 
 
-$bdd2 = $basedonnees->prepare('INSERT INTO fichier (id_lien, titrefichier, streaming, size, compteur, datecreation) VALUES (:id_lien, :titrefichier, :streaming, :size, :compteur, NOW())');
-$bdd2->execute(array(
+$bdd3 = $basedonnees->prepare('INSERT INTO fichier (id_lien, titrefichier, streaming, size, compteur, datecreation) VALUES (:id_lien, :titrefichier, :streaming, :size, :compteur, NOW())');
+$bdd3->execute(array(
 					'id_lien' => $rick,
 					'titrefichier' => $titrefichier,
 					'streaming' => $chemin,
@@ -395,7 +430,7 @@ $bdd2->execute(array(
 					'compteur' => '0'
 					));
 
-$transf = 'succés';
+$transf = 'succ&eacute;s';
 }
 
 
@@ -408,8 +443,8 @@ $transf = 'succés';
 if(isset($envoyefacult))
 {
 
-$bdd3 = $basedonnees->prepare('INSERT INTO fiche(id_lien, proprietaire, titre, contenu, datecreation) VALUES(:idlien, :proprietaire, :titre, :contenu, NOW())');
-$bdd3->execute(array(
+$new = $basedonnees->prepare('INSERT INTO fiche(id_lien, proprietaire, titre, contenu, datecreation) VALUES(:idlien, :proprietaire, :titre, :contenu, NOW())');
+$new->execute(array(
 					'idlien' => $rick,
 					'proprietaire' => $_SESSION['proprietaire'],
 					'titre' => $titretexte,
@@ -478,7 +513,7 @@ include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
@@ -491,7 +526,7 @@ include('menu.php');
 
 
 <p><center>Bienvenue sur la page d'upload de fichier du site</center></p>
-<p><center>Tout les fichiers que vous souhaitez upload ne doivent pas dépasser 20Mo.</center></p>
+<p><center>Tout les fichiers que vous souhaitez upload ne doivent pas d&eacute;passer 20Mo.</center></p>
 
 
 
@@ -508,19 +543,19 @@ if(!isset($_GET['theme']))
 {
 $notification = 'adresse invalide.';
 
-echo 'Il n\'y a rien a affiché ici.';
+echo 'Il n\'y a rien a affich&eacute; ici.';
 }
 elseif(!preg_match("#^dm$|^cour$|^revision$|^ti$#", $theme))
 {
 $notification = 'adresse invalide.';
 
-echo 'Il n\'y a rien a affiché ici.';
+echo 'Il n\'y a rien a affich&eacute; ici.';
 
 }
 else
 {
 
-//traite les donnée lié à la page
+//traite les donn&eacute;e li&eacute; à la page
 $var1 = $theme;
 
 
@@ -538,8 +573,9 @@ $table = 'lien';
 $pageweb = 'partage.php?theme='.$var1.'';
 include('pagination.php');
 
-//recherche des donnée de tite....de la page
-$papa = $basedonnees -> prepare('SELECT l.id id, l.titre titre, l.contenu contenu, i.avatar avatar, i.prenom prenom, i.nom nom, i.mail mail, DATE_FORMAT(l.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM lien l INNER JOIN  inscrit i ON l.proprietaire = i.id WHERE sujet = :sujet ORDER BY l.datecreation DESC LIMIT '.$debut.', 5');
+
+//recherche des donn&eacute;e de tite....de la page
+$papa = $basedonnees -> prepare('SELECT l.id id, l.titre titre, l.contenu contenu, i.avatar avatar, i.avatarproportion avatarproportion, i.prenom prenom, i.nom nom, i.mail mail, DATE_FORMAT(l.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM lien l INNER JOIN  inscrit i ON l.proprietaire = i.id WHERE sujet = :sujet ORDER BY l.datecreation DESC LIMIT '.$debut.', 5');
 $papa->execute(array('sujet' => $var1));
 while ($maman = $papa->fetch())
 {
@@ -548,7 +584,7 @@ while ($maman = $papa->fetch())
 
 
 //compter le nombre de commentaire par boucle
-$com = $basedonnees->prepare('SELECT COUNT(*) AS nbrcom FROM lien_commentaire WHERE idquestion = ? ');
+$com = $basedonnees->prepare('SELECT COUNT(*) AS nbrcom FROM liencommentaire WHERE idlien = ? ');
 $com ->execute(array($maman['id']));
 $comment = $com->fetch();
 $com ->closeCursor();
@@ -559,9 +595,7 @@ $com ->closeCursor();
 
 //s'occuper des liens
 $traite = nl2br($maman['contenu']);
-$traite = preg_replace('#\[(.+)\;(.+)\]#i','<a href="$1">$2</a>' , $traite);
-
-
+$traite = preg_replace('#{(.+);(.+)}#i','<a href="$1" target="_blank">$2</a>' , $traite);
 
 
 
@@ -592,7 +626,7 @@ $compteur = $fich['compteur'];
 
 }
 $bdd4 ->closeCursor();
-//les donnée du fichier sont stocké dans des variables
+//les donn&eacute;e du fichier sont stock&eacute; dans des variables
 
 
 
@@ -641,12 +675,12 @@ $ficheur ->closeCursor();
 <tr>
 <td colspan="2" style="width: 15%;"><?php echo $maman['date']; ?></td>
 <td colspan="3" style="width: 75%; font-size: 20px; font-weight: bold;"><?php echo htmlspecialchars($maman['titre']); ?></td>
-<td rowspan="3"><a href="liencommentaire.php?id=<?php echo htmlspecialchars($maman['id']);?>"><em>Afficher commentaire</em>(<?php echo $comment['nbrcom'];?>)</a></td>
+<td rowspan="3"><a href="liencommentaire.php?theme=<?php echo $var1;?>&id=<?php echo htmlspecialchars($maman['id']);?>"><em>Afficher commentaire</em>(<?php echo $comment['nbrcom'];?>)</a></td>
 
 </tr>
 
 <tr>
-<td rowspan="2" style="height: 70px; width: 70px;"><img style="width: 70px; height: 70px;" src="Images/avatars/<?php echo $maman['avatar'];?>"/></td>
+<td rowspan="2" style="height: 70px; width: 70px;"><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $maman['avatar'];?>"><img height="<?php echo ($maman['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $maman['avatar'];?>"/></a></td>
 	<td style="font-style: italic; height: 35px; width: 15%;"><?php echo htmlspecialchars($maman['nom']); ?></td>
 	<td colspan="3" rowspan="2"><?php echo $traite; ?></td>
 </tr>
@@ -667,7 +701,7 @@ if(!empty($titrefichier))
 <td style="background-color: #ecffe3;" colspan="2">Fichier:</td>
 <td style="width: 70px; background-color: #ecffe3;"><?php echo htmlspecialchars($titrefichier); ?></td>
 <td style="background-color: #ecffe3;"><?php echo $size; ?>Ko</td>
-<td style="background-color: #ecffe3;" colspan="2"><a href="<?php echo htmlspecialchars($acces); ?>"><input type="button" value="Téléchargé (<?php echo htmlspecialchars($compteur); ?>)"/></a></td>
+<td style="background-color: #ecffe3;" colspan="2"><a href="<?php echo htmlspecialchars($acces); ?>"><input type="button" value="T&eacute;l&eacute;charg&eacute; (<?php echo htmlspecialchars($compteur); ?>)"/></a></td>
 
 
 
@@ -680,9 +714,9 @@ if(!empty($titretexte))
 <tr>
 
 <td style="background-color: #ecffe3;" colspan="2">Fiche:</td>
-<td style="width: 70px; background-color: #ecffe3;"><?php echo htmlspecialchars($titretext); ?></td>
+<td style="width: 70px; background-color: #ecffe3;"><?php echo htmlspecialchars($titretexte); ?></td>
 <td style="background-color: #ecffe3;">  <a href="fiche.php?demande=apercu&nbr=<?php echo $accestexte;?>">  <input type="button" value="Apercu"/>  </a>  </td>
-<td style="background-color: #ecffe3;" colspan="2"><a href="fiche.php?demande=modification&nbr=<?php echo $accestexte;?>">  <input type="button" value="Modifié (<?php echo htmlspecialchars($compteurtexte); ?>)"/></a></td>
+<td style="background-color: #ecffe3;" colspan="2"><a href="fiche.php?demande=modification&nbr=<?php echo $accestexte;?>">  <input type="button" value="Modifi&eacute; (<?php echo htmlspecialchars($compteurtexte); ?>)"/></a></td>
 
 
 
@@ -760,11 +794,11 @@ include('pagination.php');
 
 </tr>
 <tr>
-<td style="width: 50%;"><label for="titre">Titre</label>:</td><td style="width: 50%;"><input id="titre" type="text" name="titre"/></td>
+<td style="width: 50%;"><label for="titre">Titre</label>:</td><td style="width: 50%;"><input id="titre" type="text" name="titre" required/></td>
 </tr>
 
 <tr>
-<td  style="width: 50%;"><label for="descri">Desciption</label>:</td><td style="width: 50%;"> <textarea style="background-color: #e0f5fb;" id="descri" name="descri" rows="5"></textarea/></td>
+<td  style="width: 50%;"><label for="descri">Desciption</label>:</td><td style="width: 50%;"> <textarea style="background-color: #e0f5fb;" id="descri" name="descri" rows="5"  required></textarea/></td>
 </tr>
 
 
@@ -839,6 +873,11 @@ include('pagination.php');
 
 
 
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

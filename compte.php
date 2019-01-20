@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -22,8 +22,8 @@ include('stock.php');
 //==============================  avatar    ========================================================
 
 
-$nom=$_SESSION['nom'];
-$prenom=$_SESSION['prenom'];
+$nom=$_SESSION['snom'];
+$prenom=$_SESSION['sprenom'];
 $numero = $nom.' '.$prenom;
 $preo = $_SESSION['proprietaire'];
 $adresse = hexdec($numero);
@@ -36,9 +36,9 @@ if(isset($_POST['envoyer']))
 {
 
 //declare les variable utile au traitement
-$maxsize = 100000;
-$maxheight = 500;
-$maxwidth = 500;
+$maxsize = 2000000;
+$maxheight = 1000;
+$maxwidth = 1000;
 
 
 
@@ -87,16 +87,21 @@ else
  $all = $adresse.'.'.$extension_upload.'';
 
   $trajet = 'Images/avatars/'.$adresse.'.'.$extension_upload.'';
+  $proportion = $image_sizes[1] / $image_sizes[0];
 
 if(move_uploaded_file($_FILES['avatar']['tmp_name'],$trajet))
 {
 
 
-$notification =  "Transfert réussi";
+$notification =  "Transfert r&eacute;ussi";
 
 
-$pos = $basedonnees->prepare('UPDATE inscrit SET avatar=? WHERE id=?');
-$pos->execute(array($all, $preo));
+
+$pos = $basedonnees->prepare('UPDATE inscrit SET avatar = :avatar, avatarproportion = :avatarproportion WHERE id = :id');
+$pos->execute(array(
+					'avatar' => $all,
+					'avatarproportion' => $proportion,
+					'id' => $preo));
 
 
 
@@ -111,7 +116,7 @@ $pos->execute(array($all, $preo));
 
 }
 
-}//fin du si formulaire envoyé
+}//fin du si formulaire envoy&eacute;
 
 
 
@@ -157,15 +162,15 @@ $new2 = strtolower($new2);
 
 if(empty($old) OR empty($new) OR empty($new2))
 {
-$notification = 'Tout les champs doivent être remplis.';
+$notification = 'Tout les champs doivent &ecirc;tre remplis.';
 }
 elseif($new != $new2)
 {
-$notification = 'Les champs du nouveau mot de passe doivent être identiques';
+$notification = 'Les champs du nouveau mot de passe doivent &ecirc;tre identiques';
 }
 elseif(!preg_match("#^[a-zA-Z0-9]{4,20}$#", $new))
 {
-$notification = 'Votre mot de passe doit contenir entre 5 et 20 caractères.';
+$notification = 'Votre mot de passe doit contenir entre 5 et 20 caract&egrave;res.';
 }
 else
 {
@@ -193,12 +198,12 @@ $tintin->execute(array($nouveau, $_SESSION['proprietaire']));
 //envoie d'un mail
 
 $message_txt = '
-Votre mot de passe a été changé, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.
+Votre mot de passe a &eacute;t&eacute; chang&eacute;, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.
 Vous devez donc dorennavent vous connecter avec ces identifiants.
 
 Voici, ci-joint votre login et votre mot de passe:
 
-Login: '.$_SESSION['login'].'
+Login: '.$_SESSION['slogin'].'
 Mot de passe :'.$new.'
 
 <a href="forum-unsa.fr">Se connecter</a>
@@ -213,17 +218,17 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
        <title>Information</title>
        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
    </head>
-<body>
+</head><body>
 
 
-<p>Votre mot de passe a été changé, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.</p>
+<p>Votre mot de passe a &eacute;t&eacute; chang&eacute;, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.</p>
 <p>Vous devez donc dorennavent vous connecter avec ces identifiants.</p>
 
 <p>Voici, ci-joint votre login et votre mot de passe:</p>
 
 <table>
 <tr>
-<td>Login:</td><td>'.$_SESSION['login'].'</td>
+<td>Login:</td><td>'.$_SESSION['slogin'].'</td>
 </tr>
 <tr>
 <td>Mot de passe:</td><td>'.$new.'</td>
@@ -246,9 +251,9 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
 
 $emmeteur = 'Compte sur UNSA';
 $sujet = 'Modification du mot de passe.';
-$mail = $_SESSION['mail'];
-$envoieV = 'Votre nouveau mot de passe vous a été envoyé par mail. Il est dorenavant valide';
-$envoieX = 'Votre mot de passe a été changé';
+$mail = $_SESSION['smail'];
+$envoieV = 'Votre nouveau mot de passe vous a &eacute;t&eacute; envoy&eacute; par mail. Il est dorenavant valide';
+$envoieX = 'Votre mot de passe a &eacute;t&eacute; chang&eacute;';
 include('mail.php');
 
 
@@ -287,7 +292,7 @@ if(isset($_POST['chatvalider']))
 {
 $chat = htmlspecialchars($_POST['chatpreference']);
 
-if(!preg_match("#^discussion$|^connecter$|^fermer$#", $chat))
+if(!preg_match("#^discussion$|^connecter$|^fermer$|^tout$#", $chat))
 {
 $notification = 'Mauvaise adresse';
 }
@@ -298,10 +303,10 @@ $modifier->execute(array(
 						'preference'=> $chat,
 						'proprietaire' => $_SESSION['proprietaire']
 						));
+$modifier->closeCursor();
+$_SESSION['songletchat'] = $chat;
 
-$_SESSION['chat'] = $chat;
-
-$notification = 'Modification effectué';
+$notification = 'Modification effectu&eacute;';
 }
 
 
@@ -320,9 +325,6 @@ include('head.php');
 ?>
 
 
-
-
-<body>
     <script type="text/javascript">
          //<!--
                  function change_fenetre(nom)
@@ -336,12 +338,15 @@ include('head.php');
          //-->
          </script>
 
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
+
+
 <?php
 
 include('menu.php');
 ?>
 <div id="contenu">
-<p><center>Bienvenue sur la page d'acces a vos données personnels</center></p>
+<p><center>Bienvenue sur la page d'acces a vos donn&eacute;es personnels</center></p>
 
 
 
@@ -364,39 +369,39 @@ include('menu.php');
 <form method="POST" action="#">
 <tr>
 <td colspan="2">Login:</td>
-<td colspan="2"><?php echo $_SESSION['login'];?></td>
+<td colspan="2"><?php echo $_SESSION['slogin'];?></td>
 </tr>
 <tr>
 <td colspan="2">Ancien Mot de passe:</td>
-<td colspan="2"><input type="password" name="old"/></td>
+<td colspan="2"><input type="password" name="old"  required /></td>
 </tr>
 <tr>
 <td colspan="2">Nouveau :</td>
-<td colspan="2"><input type="password" name="new"/></td>
+<td colspan="2"><input type="password" name="new"  required /></td>
 </tr>
 <tr>
 <td colspan="2">Retaper le nouveau:</td>
-<td colspan="2"><input type="password" name="new2"/></td>
+<td colspan="2"><input type="password" name="new2" required /></td>
 </tr>
 <tr>
 <td colspan="2">Prenom:</td>
-<td colspan="2"><?php echo $_SESSION['prenom'];?></td>
+<td colspan="2"><?php echo $_SESSION['sprenom'];?></td>
 </tr>
 <tr>
 <td colspan="2">Nom:</td>
-<td colspan="2"><?php echo $_SESSION['nom'];?></td>
+<td colspan="2"><?php echo $_SESSION['snom'];?></td>
 </tr>
 <tr>
 <td colspan="2">Adresse Mail:</td>
-<td colspan="2"><?php echo $_SESSION['mail'];?></td>
+<td colspan="2"><?php echo $_SESSION['smail'];?></td>
 </tr>
 <tr>
 <td colspan="2">Date de naissance:</td>
-<td colspan="2"><?php echo $_SESSION['date'];?></td>
+<td colspan="2"><?php echo $_SESSION['sdate'];?></td>
 </tr>
 <tr>
 <td colspan="2">Vous etes inscrit au news:</td>
-<td colspan="2"><?php echo $_SESSION['news'];?></td>
+<td colspan="2"><?php echo $_SESSION['snews'];?></td>
 </tr>
 <tr>
 <td colspan="2">Valider les modification:</td>
@@ -420,7 +425,7 @@ include('menu.php');
 
 //=============================================================   avatar ==============================================
 //verif BDD
-$imag = $basedonnees ->prepare('SELECT avatar FROM inscrit WHERE id = ?');
+$imag = $basedonnees ->prepare('SELECT avatar, avatarproportion FROM inscrit WHERE id = ?');
 $imag ->execute(array($preo));
 while($good = $imag->fetch())
 {
@@ -437,15 +442,15 @@ while($good = $imag->fetch())
 
 
 <tr>
-<td rowspan="2" style="height: 70px; width: 20%;"><img src="Images/avatars/<?php echo $good['avatar'];?>"/></td>
-	<td style="font-style: italic; height: 35px; width: 10%;"><?php echo $_SESSION['nom']; ?></td>
-	<td><label for="avatar">Changer votre avatar :</label></td><td>    (Taille max : 10 ko)</td>
+<td rowspan="2" style="height: 70px; width: 20%;"><img height="<?php echo ($good['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $good['avatar'];?>"/></td>
+	<td style="font-style: italic; height: 35px; width: 10%;"><?php echo $_SESSION['snom']; ?></td>
+	<td><label for="avatar">Changer votre avatar :</label></td><td>    (Taille max : 2 Mo)</td>
 
 </tr>
 <tr>
 
-	<td style="height: 35px; width: 15%;"><?php echo $_SESSION['prenom'];  ?></td>
-	<td colspan="2"><input type="file" name="avatar" id="avatar" /></td>
+	<td style="height: 35px; width: 15%;"><?php echo $_SESSION['sprenom'];  ?></td>
+	<td colspan="2"><input type="file" name="avatar" id="avatar"  required /></td>
 </tr>
 <tr>
 
@@ -490,7 +495,8 @@ $imag->closeCursor();
 <td colspan="2"><label for="chat">Onglet preferencielle du chat:</label></td>
 <td><select name="chatpreference" id="chat">
 				<option value="discussion">Discussion</option>
-				<option value="connecter">Connectés</option>
+				<option value="tout">Agenda</option>
+				<option value="connecter">Connect&eacute;</option>
 				<option value="fermer">Fermer</option>
 				</select></td>
 <td><input type="submit" value ="enregistrer" name="chatvalider"/></td>
@@ -546,6 +552,12 @@ $imag->closeCursor();
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

@@ -1,6 +1,6 @@
 <?php
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -42,7 +42,7 @@ $reussi = 'ok';
 if($valider == 'oui')
 {
 
-//si valider egal oui alors transfert des donnée vers la base de donnée
+//si valider egal oui alors transfert des donn&eacute;e vers la base de donn&eacute;e
 
 
 //haching
@@ -54,11 +54,12 @@ $permission = 'utilisateur';
 
 
 $adresse = '0';
+$numprop = '1';
 
-
-$transfert = $basedonnees ->prepare('INSERT INTO inscrit(avatar, login, mdp, sexe, nom, prenom, mail, datenaissance, news, datecreation, permission) VALUES(:avatar, :login, :mpd, :sexe, :nom, :prenom, :mail, :datenaissance, :news, :datecreation, :permission)');
+$transfert = $basedonnees ->prepare('INSERT INTO inscrit(avatar, avatarproportion, login, mdp, sexe, nom, prenom, mail, datenaissance, news, datecreation, permission) VALUES(:avatar, :avatarproportion, :login, :mpd, :sexe, :nom, :prenom, :mail, :datenaissance, :news, :datecreation, :permission)');
 $transfert->execute(array(
 							'avatar' => $adresse,
+							'avatarproportion' => $numprop,
 							'login' => $alors['login'],
 							'mpd' => $passwd,
 							'sexe' => $alors['sexe'],
@@ -71,10 +72,10 @@ $transfert->execute(array(
 							'permission' => $permission
 							));
 
-$sujet= 'Compte validé';
+$sujet= 'Compte valid&eacute;';
 
 $message_txt = '
-Votre compte a bien été validé, sur le site <a href="forum-unsa.fr">forum-unsa.fr</a>.
+Votre compte a bien &eacute;t&eacute; valid&eacute;, sur le site <a href="forum-unsa.fr">forum-unsa.fr</a>.
 Vous pouvez donc dorennavent vous inscrire et participer à la vie du site.
 
 Voici, ci-joint votre login et votre mot de passe:
@@ -94,10 +95,10 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
        <title>Information</title>
        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
    </head>
-<body>
+</head><body>
 
 
-<p>Votre compte a bien été validé, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.</p>
+<p>Votre compte a bien &eacute;t&eacute; valid&eacute;, sur le site <a href="http://forum-unsa.fr">forum-unsa.fr</a>.</p>
 <p>Vous pouvez donc dorennavent vous inscrire et participer à la vie du site.</p>
 
 <p>Voici, ci-joint votre login et votre mot de passe:</p>
@@ -141,7 +142,7 @@ $suppresion -> execute(array($alors['login']));
 
 
 
-//si valider egal non alors on supprimer les donnée
+//si valider egal non alors on supprimer les donn&eacute;e
 elseif($valider == 'non')
 {
 
@@ -149,11 +150,11 @@ $suppresion = $basedonnees ->prepare('DELETE FROM confirmation WHERE login= ?');
 $suppresion -> execute(array($alors['login']));
 
 
-$sujet = 'Comtpe refusé';
+$sujet = 'Comtpe refus&eacute;';
 
 $message_txt = '
-Nous somme désolé mais votre compte s\'est vu être supprimer, nous rappellons que vous devez faire partie de la communauté pour pouvoir vous inscrire.
-Si c\'est le cas alors le problème vient surement du faite que vous avez renseigné de mauvaise information qui nous on empecher de vous identifier.';
+Nous somme d&eacute;sol&eacute; mais votre compte s\'est vu &ecirc;tre supprimer, nous rappellons que vous devez faire partie de la communaut&eacute; pour pouvoir vous inscrire.
+Si c\'est le cas alors le probl&egrave;me vient surement du faite que vous avez renseign&eacute; de mauvaise information qui nous on empecher de vous identifier.';
 
 $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
@@ -161,10 +162,10 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
        <title>Information</title>
        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
    </head>
-<body>
+</head><body>
 
-<p>Nous somme désolé mais votre compte s\'est vu être supprimer, nous rappellons que vous devez faire partie de la communauté pour pouvoir vous inscrire.</p>
-<p>Si c\'est le cas alors le problème vient surement du faite que vous avez renseigné de mauvaise information qui nous on empecher de vous identifier.</p>
+<p>Nous somme d&eacute;sol&eacute; mais votre compte s\'est vu &ecirc;tre supprimer, nous rappellons que vous devez faire partie de la communaut&eacute; pour pouvoir vous inscrire.</p>
+<p>Si c\'est le cas alors le probl&egrave;me vient surement du faite que vous avez renseign&eacute; de mauvaise information qui nous on empecher de vous identifier.</p>
 
 
 
@@ -204,20 +205,20 @@ else
 
 
 
-//=====Création de la boundary
+//=====Cr&eacute;ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
 
 
-//=====Création du header de l'e-mail.
+//=====Cr&eacute;ation du header de l'e-mail.
 $header = "From: \"Validation du compte\"<forum-unsa.fr@gmail.com>".$passage_ligne;
-$header.= "Reply-to: \"Eviter de répondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
+$header.= "Reply-to: \"Eviter de r&eacute;pondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Cr&eacute;ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
@@ -241,7 +242,7 @@ $message.= $passage_ligne."--".$boundary."--".$passage_ligne;
 
 if(mail($alors['mail'], $sujet, $message, $header))
 {
-$notification = 'Mail de notification envoyé';
+$notification = 'Mail de notification envoy&eacute;';
 }
 
 else
@@ -267,7 +268,7 @@ $validation->closeCursor();
 
 if(!isset($reussi))
 {
-$notification = 'Lien déja validé.';
+$notification = 'Lien d&eacute;ja valid&eacute;.';
 }
 
 }
@@ -301,7 +302,7 @@ include('head.php');
 
 ?>
 
-<body>
+</head><body>
 
 
 

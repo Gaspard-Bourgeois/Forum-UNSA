@@ -21,20 +21,20 @@ else
 
 
 
-//=====Création de la boundary
+//=====Cr&eacute;ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
 
 
-//=====Création du header de l'e-mail.
+//=====Cr&eacute;ation du header de l'e-mail.
 $header = "From: \"".$emmeteur."\"<forum-unsa.fr@gmail.com>".$passage_ligne;
-$header.= "Reply-to: \"Eviter de répondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
+$header.= "Reply-to: \"Eviter de r&eacute;pondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Cr&eacute;ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;

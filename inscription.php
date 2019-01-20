@@ -1,6 +1,6 @@
 <?php
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -39,38 +39,38 @@ $news = 0;
 
 if(empty($login) OR empty($mdp) OR empty($mdp2) OR empty($nom) OR empty($prenom) OR empty($sexe) OR empty($mail) OR empty($datenaissance1) OR empty($datenaissance2) OR empty($datenaissance3))
 {
-$notification = 'Touts les champs doivent être remplis.';
+$notification = 'Touts les champs doivent &ecirc;tre remplis.';
 
 }
 
 elseif(empty($charte))
 {
-$notification = 'Vous devez accepter la charte de confidentialité pour vous inscrire';
+$notification = 'Vous devez accepter la charte de confidentialit&eacute; pour vous inscrire';
 }
 
-elseif(!preg_match("#^[a-zA-Z0-9éèï]{2,}$#", $login))
+elseif(!preg_match("#^[a-zA-Z0-9&eacute;&egrave;ï]{2,}$#", $login))
 {
-$notification = 'Votre login doit être composé au minimum de 2 caractheres.';
+$notification = 'Votre login doit &ecirc;tre compos&eacute; au minimum de 2 caractheres.';
 }
 
 elseif(!preg_match("#^[a-zA-Z0-9]{4,20}$#", $mdp))
 {
-$notification = 'Votre mot de passe doit être composé de 5 à 20 caractheres.';
+$notification = 'Votre mot de passe doit &ecirc;tre compos&eacute; de 5 à 20 caractheres.';
 }
 
-elseif(!preg_match("#^[a-zA-Zéè]{1,}$#", $nom))
+elseif(!preg_match("#^[a-zA-Z&eacute;&egrave;]{1,}$#", $nom))
 {
-$notification = 'Votre nom doit être composé de 3 à 30 caracthères.';
+$notification = 'Votre nom doit &ecirc;tre compos&eacute; de 3 à 30 caracth&egrave;res.';
 }
 
-elseif(!preg_match("#^[a-zA-Zéèï]{1,}$#", $prenom))
+elseif(!preg_match("#^[a-zA-Z&eacute;&egrave;ï]{1,}$#", $prenom))
 {
-$notification = 'Votre prénom doit faire au minimu 3 à 30 caracthères.';
+$notification = 'Votre pr&eacute;nom doit faire au minimu 3 à 30 caracth&egrave;res.';
 }
 
 elseif(!preg_match("#^M$|^F$#", $sexe))
 {
-$notification = 'Votre sexe ne peut être autre que Masculin ou Feminin.';
+$notification = 'Votre sexe ne peut &ecirc;tre autre que Masculin ou Feminin.';
 }
 
 elseif(!preg_match("#^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z]{2,4}$#", $mail))
@@ -85,7 +85,7 @@ $notification = 'Votre date de naissance est invalide.';
 
 elseif($prenom == $nom)
 {
-$notification = 'Votre prenom et votre nom ne peuvent être identiques';
+$notification = 'Votre prenom et votre nom ne peuvent &ecirc;tre identiques';
 }
 else
 {
@@ -97,17 +97,17 @@ while($oups = $verif->fetch())
 {
 if($oups['login'] == $login)
 {
-$notification = 'Ce login existe déjà.';
+$notification = 'Ce login existe d&eacute;jà.';
 }
 
 if($oups['nom'] == $nom AND $oups['prenom'] == $prenom)
 {
-$notification = 'Cette identité est déja utilisé. Vous avez surement déjà créer un compte.';
+$notification = 'Cette identit&eacute; est d&eacute;ja utilis&eacute;. Vous avez surement d&eacute;jà cr&eacute;er un compte.';
 }
 
 if($oups['mail'] == $mail)
 {
-$notification = 'Cette adresse mail est déjà utilisée.';
+$notification = 'Cette adresse mail est d&eacute;jà utilis&eacute;e.';
 }
 }
 //fin de boucle pour confirmation
@@ -119,17 +119,17 @@ while($oups = $verif1 ->fetch())
 {
 if($oups['login'] == $login)
 {
-$notification = 'Ce login existe déjà.';
+$notification = 'Ce login existe d&eacute;jà.';
 }
 
 if($oups['nom'] == $nom AND $oups['prenom'] == $prenom)
 {
-$notification = 'Cette identité est déja utilisé. Vous avez surement déjà créer un compte.';
+$notification = 'Cette identit&eacute; est d&eacute;ja utilis&eacute;. Vous avez surement d&eacute;jà cr&eacute;er un compte.';
 }
 
 if($oups['mail'] == $mail)
 {
-$notification = 'Cette adresse mail est déjà utilisée.';
+$notification = 'Cette adresse mail est d&eacute;jà utilis&eacute;e.';
 }
 }
 //fin de boucle pour les inscrits
@@ -198,13 +198,13 @@ else
 {
 	$passage_ligne = "\n";
 }
-//=====Déclaration des messages au format texte et au format HTML.
-$message_txt = 'Merci de vous être inscrit sur le site Web: forum-unsa.fr.
-Si vous reconnaissez être '.$nom.' '.$prenom.' , vous devez confirmer votre inscription en cliquant sur le lien ci-dessous:
+//=====D&eacute;claration des messages au format texte et au format HTML.
+$message_txt = 'Merci de vous &ecirc;tre inscrit sur le site Web: forum-unsa.fr.
+Si vous reconnaissez &ecirc;tre '.$nom.' '.$prenom.' , vous devez confirmer votre inscription en cliquant sur le lien ci-dessous:
 
 Lien de confirmation: <a href="forum-unsa.fr/confirmation.php?code='.$code.'">forum-unsa.fr/confirmation.php?code='.$code.'</a>
 
-Si vous préférez annuler votre inscription, il vous suffit de supprimer ce mail, sa suppression sera automatique après l\'écoulement d\'un délai de trente jours.
+Si vous pr&eacute;f&eacute;rez annuler votre inscription, il vous suffit de supprimer ce mail, sa suppression sera automatique apr&egrave;s l\'&eacute;coulement d\'un d&eacute;lai de trente jours.
 
 Accueil du site: <a href="forum-unsa.fr/">forum-unsa.fr</a>';
 
@@ -216,12 +216,12 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
    </head>
 <body>
 
-<p>Merci de vous être inscrit sur le site Web: forum-unsa.fr!</p>
-<p>Si vous reconnaissez être '.$nom.' '.$prenom.' , vous devez confirmer votre inscription en cliquant sur le lien ci-dessous:</p>
+<p>Merci de vous &ecirc;tre inscrit sur le site Web: forum-unsa.fr!</p>
+<p>Si vous reconnaissez &ecirc;tre '.$nom.' '.$prenom.' , vous devez confirmer votre inscription en cliquant sur le lien ci-dessous:</p>
 
 <p>Lien de confirmation: <a href="forum-unsa.fr/confirmation.php?code='.$code.'">forum-unsa.fr/confirmation.php?code='.$code.'</a></p>
 
-<p>Si vous préférez annuler votre inscription, il vous suffit de supprimer ce mail, sa suppression sera automatique après l\'écoulement d\'un délai de trente jours.</p>
+<p>Si vous pr&eacute;f&eacute;rez annuler votre inscription, il vous suffit de supprimer ce mail, sa suppression sera automatique apr&egrave;s l\'&eacute;coulement d\'un d&eacute;lai de trente jours.</p>
 
 <p>Accueil du site: <a href="forum-unsa.fr/">forum-unsa.fr</a></p>
 
@@ -232,21 +232,21 @@ $message_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http:
 </html>';
 //==========
 
-//=====Création de la boundary
+//=====Cr&eacute;ation de la boundary
 $boundary = "-----=".md5(rand());
 //==========
 
 
  $sujet = 'Confirmation d\'inscription';
 
-//=====Création du header de l'e-mail.
+//=====Cr&eacute;ation du header de l'e-mail.
 $header = "From: \"forum-unsa.fr\"<forum-unsa.fr@gmail.com>".$passage_ligne;
-$header.= "Reply-to: \"Eviter de répondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
+$header.= "Reply-to: \"Eviter de r&eacute;pondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========
 
-//=====Création du message.
+//=====Cr&eacute;ation du message.
 $message = $passage_ligne."--".$boundary.$passage_ligne;
 //=====Ajout du message au format texte.
 $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
@@ -355,7 +355,7 @@ $notification = 'Il est impossible de vous envoyer un mail a cette adresse';
 
 <table>
 <tr>
-<td><label for="login">Login</label>:</td><td><input type="text" id="login" name="login" size="20" maxlength="15" placeholder="ex: Jay5" value=""></td>
+<td><label for="login">Login</label>:</td><td><input type="text" id="login" name="login" size="20" maxlength="15" placeholder="ex: Jay5" value="<?php echo htmlspecialchars($_POST['login']);?>"></td>
 <td rowspan="3"><p>Les majuscules et minuscules ne sont pas prises en compte</p></td>
 </tr>
 
@@ -364,18 +364,18 @@ $notification = 'Il est impossible de vous envoyer un mail a cette adresse';
 </tr>
 
 <tr>
-<td><label for="mdp2">Confirmer le Mot de Passe</label>:</td><td><input type="password" id="mdp2" name="mdp2" size="28" maxlength="20" placeholder="Retaper le même mot de passe"/></td>
+<td><label for="mdp2">Confirmer le Mot de Passe</label>:</td><td><input type="password" id="mdp2" name="mdp2" size="28" maxlength="20" placeholder="Retaper le m&ecirc;me mot de passe"/></td>
 </tr>
 </table>
 </fieldset>
 </p>
 <p>
-<fieldset><legend>Identité</legend>
+<fieldset><legend>Identit&eacute;</legend>
 <table>
 
 <tr>
 
-<td><label for="prenom">Prénom</label>:</td><td><input type="text" id="prenom" name="prenom" size="28" maxlength="20" placeholder="ex: Jason" value=""/></td>
+<td><label for="prenom">Pr&eacute;nom</label>:</td><td><input type="text" id="prenom" name="prenom" size="28" maxlength="20" placeholder="ex: Jason" value="<?php echo htmlspecialchars($_POST['prenom']);?>"/></td>
 
 
 </tr>
@@ -383,27 +383,27 @@ $notification = 'Il est impossible de vous envoyer un mail a cette adresse';
 
 
 
-<td><label for="nom">Nom</label>:</td><td><input type="text" id="nom" name="nom" size="28" maxlength="20" placeholder="ex: Statham" value="" /></td>
+<td><label for="nom">Nom</label>:</td><td><input type="text" id="nom" name="nom" size="28" maxlength="20" placeholder="ex: Statham" value="<?php echo htmlspecialchars($_POST['nom']);?>" /></td>
 
 
 </tr>
 
 <td><label for="sexe">Sexe</label>:</td><td><select id="sexe" name="sexe">
 									<option value="M">Masculin</option>
-									<option value="F">Féminin</option>
+									<option value="F">F&eacute;minin</option>
 								</select></td>
 
 </tr>
 <tr>
 
-<td><label for="mail">Adresse Mail</label>:</td><td><input type="text" id="mail" name="mail" size="28" maxlength="85" placeholder="ex: jays.stath@free.fr" value=""/></td>
+<td><label for="mail">Adresse Mail</label>:</td><td><input type="text" id="mail" name="mail" size="28" maxlength="85" placeholder="ex: jays.stath@free.fr" value="<?php echo htmlspecialchars($_POST['mail']);?>"/></td>
 
 </tr>
 <tr>
 
-<td><label for="datenaissance">Date de Naissance</label>:</td><td><input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance1" value=""/> /
-																	<input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance2" value=""/> /
-																	<input type="text" id="datenaissance" size="5" maxlength="4" name="datenaissance3" value=""/></td>
+<td><label for="datenaissance">Date de Naissance</label>:</td><td><input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance1" value="<?php echo htmlspecialchars($_POST['datenaissance1']);?>"/> /
+																	<input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance2" value="<?php echo htmlspecialchars($_POST['datenaissance2']);?>"/> /
+																	<input type="text" id="datenaissance" size="5" maxlength="4" name="datenaissance3" value="<?php echo htmlspecialchars($_POST['datenaissance3']);?>"/></td>
 
 </tr>
 
@@ -415,12 +415,12 @@ $notification = 'Il est impossible de vous envoyer un mail a cette adresse';
 <table>
 <tr>
 
-<td><label for="news">Je souhaite recevoir des mails m'informant des nouveautés, envoyé par les soins de l'administrateur </label>:</td><td><input type="checkbox" id="news" name="news" checked /></td>
+<td><label for="news">Je souhaite recevoir des mails m'informant des nouveaut&eacute;s, envoy&eacute; par les soins de l'administrateur </label>:</td><td><input type="checkbox" id="news" name="news" checked /></td>
 
 </tr>
 <tr>
 
-<td><label for="confidence">J'accepte la charte de confidentialité du site, disponible <a href="confidentialite.php">ici</a></label>:</td><td><input type="checkbox" id="confidence" name="charte" /></td>
+<td><label for="confidence">J'accepte la charte de confidentialit&eacute; du site, disponible <a href="confidentialite.php">ici</a></label>:</td><td><input type="checkbox" id="confidence" name="charte" /></td>
 
 </tr>
 </table>
@@ -430,7 +430,7 @@ $notification = 'Il est impossible de vous envoyer un mail a cette adresse';
 <table>
 <tr>
 <td><input type="submit" name="envoyer" value="Valider"/></td>
-<td><input type="reset" value="Reinitialisé"/></td>
+<td><input type="reset" value="Reinitialis&eacute;"/></td>
 <td><a href="index.php?"><input  type="button" value="Accueil"/></a></td>
 </tr>
 

@@ -1,18 +1,22 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
+//debut de traitement
+
+
+
 //debut de traitement
 
 
@@ -40,11 +44,7 @@ $datesortie = $_POST['datesortie'];
 //fin declaration des variable en question
 if(empty($titre) OR empty($datesortie))
 {
-$notification = 'Vous devez donner les informations lié au film';
-}
-elseif(!preg_match("#[1-2]{1}[6789012]{1}[0-9]{2}#", $datesortie))
-{
-$notification = 'La date de sortie doit être une date valide';
+$notification = 'Vous devez donner les informations li&eacute; à la chanson';
 }
 elseif(empty($_FILES['film']['size']) )
 {
@@ -57,14 +57,14 @@ else
 {
 //definit les extension a valider
 
-$extensions_valides = array( 'avi' , 'mp4' , 'wmv' );
+$extensions_valides = array( 'mp4', 'mpg' , 'avi' );
 $extension_upload = strtolower(  substr(  strrchr($_FILES['film']['name'], '.')  ,1)  );
 
 $titre = strtolower($titre);
 $titre = ucfirst($titre);
 $datesortie = strtolower($datesortie);
 $datesortie = ucfirst($datesortie);
-$adresse = $titre.'('.$datesortie.'';
+$adresse = $datesortie.'-'.$titre;
 
 
 $chemin = ''.$adresse.'.'.$extension_upload.'';
@@ -79,7 +79,7 @@ while($simil = $verif->fetch())
 
 if($simil['streaming'] == $chemin)
 {
-$notification = 'Vous avez déja poster ce fichier';
+$notification = 'Vous avez d&eacute;ja poster ce fichier';
 }
 
 
@@ -123,12 +123,12 @@ if(move_uploaded_file($_FILES['film']['tmp_name'],$trajet))
 
 
 
-$notification =  "Transfert réussi";
+$notification =  "Transfert r&eacute;ussi";
 
 
 $pos = $basedonnees->prepare('INSERT INTO film (proprietaire, titre, datesortie, streaming, size, compteur, datecreation) VALUES (:proprietaire, :titre, :datesortie, :streaming, :size, :compteur, NOW())');
 $pos->execute(array(
-					'proprietaire' => $_SESSION['proprietaire'],
+					'proprietaire' => $preo,
 					'titre' => $titre,
 					'datesortie' => $datesortie,
 					'streaming' => $chemin,
@@ -149,7 +149,7 @@ $pos->execute(array(
 }
 }
 
-}//fin du si formulaire envoyé
+}//fin du si formulaire envoy&eacute;
 
 
 
@@ -183,19 +183,23 @@ $orderby = 'm.datecreation';
 
 
 
-
 //fin de traitement
-$titre = 'Cinémathèque';
+$titre = 'Filmoth&egrave;que';
 include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
 include('menu.php');
 ?>
+
+<p><center>Bienvenue</center></p>
+
+
+
 
 
 
@@ -219,11 +223,11 @@ $req = $basedonnees -> query('SELECT m.titre titre, m.datesortie datesortie, m.s
 
 ?>
 
-<table style="width: 100%; text-align: center; margin: auto;">
+<table style="text-align: center;">
 <tr>
 <th><a href="film.php?order=compteur">Hits:</a></th>
-<th><a href="film.php?order=titre">Titre:</a></th>
 <th><a href="film.php?order=datesortie">datesortie:</a></th>
+<th><a href="film.php?order=titre">Titre:</a></th>
 <th><a href="film.php?order=size">Taille:</a></th>
 <th><a href="film.php?order=uploadeur">Uploadeur:</a></th>
 <th><a href="film.php?order=date">Date:</a></th>
@@ -240,12 +244,12 @@ $size = round($size);
 
 
 <tr>
-<td style="width: 15%;"><a href="Images/telechargement.php?type=film&fichier=<?php echo $discussion['streaming'];?>"><input type="button" value="Télécharger (<?php echo $discussion['compteur'];?>)"/></a></td>
-<td style="width: 15%;"><?php echo $discussion['titre'];?></td>
-<td style="width: 10%;"><?php echo $discussion['datesortie'];?></td>
+<td style="width: 15px;"><a href="Images/telechargement.php?type=film&fichier=<?php echo $discussion['streaming'];?>"><input type="button" value="T&eacute;l&eacute;charger (<?php echo $discussion['compteur'];?>)"/></a></td>
+<td style="width: 10px;"><?php echo $discussion['datesortie'];?></td>
+<td style="width: 15px;"><?php echo $discussion['titre'];?></td>
 <td><i><?php echo $size;?>Mo</i></td>
-<td style="width: 40%;">Upload by <?php echo $discussion['nom'];?> <?php echo $discussion['prenom'];?></td>
-<td style="width: 20%;"><i><?php echo $discussion['date'];?></i></td>
+<td style="width: 40px;">Upload by <?php echo $discussion['nom'];?> <?php echo $discussion['prenom'];?></td>
+<td style="width: 20px;"><i><?php echo $discussion['date'];?></i></td>
 
 </tr>
 
@@ -264,21 +268,21 @@ $req ->closeCursor();
 
 
 
-<div style="width: 60%; margin: auto;">
+<div>
 
 <form method="post" action="film.php" enctype="multipart/form-data">
-<fieldset><legend>Mes films</legend>
+<fieldset><legend>Ma film</legend>
 <table style="width: 60%; margin: auto; text-align: center;">
 
 
 
 <tr>
-<td><label for="titre">Titre</label>:<input id="titre" type="text" name="titre"/></td>
-<td ><label for="datesortie">Date de sortie</label>:<input  id="datesortie" type="text" name="datesortie" maxlenght="4"/></td>
+<td><label for="titre">Titre</label>:<input id="titre" type="text" name="titre" required/></td>
+<td ><label for="datesortie">datesortie</label>:<input  id="datesortie" type="text" name="datesortie" required/></td>
 </tr>
 
 <tr>
-	<td colspan="2"><input type="file" name="film"/> (Max: 2 000Mo)</td>
+	<td colspan="2"><input type="file" name="film"/></td>
 </tr>
 <tr>
 
@@ -322,6 +326,10 @@ $req ->closeCursor();
 
 
 
+<?php
+include('agenda.php');
+?>
+
 
 
 
@@ -330,7 +338,6 @@ $req ->closeCursor();
 include('chat.php');
 ?>
 
-</div>
 </body>
 </html>
 

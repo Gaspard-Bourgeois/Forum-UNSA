@@ -4,12 +4,12 @@ session_start();
 if(!isset($_SESSION['permission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -26,7 +26,7 @@ include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['ongletchat'];?>');">
 
 <?php
 
@@ -65,6 +65,12 @@ include('menu.php');
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

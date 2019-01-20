@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -28,7 +28,7 @@ $contenu = htmlspecialchars($_POST['contenu']);//contenu
 
 if (empty($_POST['titre']) OR empty($_POST['contenu']))
 {
-$notification = 'Tout les champs doivent être remplis.';
+$notification = 'Tout les champs doivent &ecirc;tre remplis.';
 }
 
 
@@ -41,7 +41,7 @@ $notification = 'Vous ne pouvez commencer votre Question par un espace.';
 
 elseif(!preg_match("#^.{10}#", $contenu))
 {
-$notification = 'Votre Qestion doit avoir une longueur minimum de 10 caracthères.';
+$notification = 'Votre Qestion doit avoir une longueur minimum de 10 caracth&egrave;res.';
 }
 
 
@@ -53,7 +53,7 @@ $notification = 'Votre Titre ne peut pas commencer par un espace.';
 
 elseif(!preg_match("#^.{4}#", $titre))
 {
-$notification = 'Votre Titre doit avoir une longueur minimum de 4 caracthères.';
+$notification = 'Votre Titre doit avoir une longueur minimum de 4 caracth&egrave;res.';
 }
 
 
@@ -102,7 +102,7 @@ $contenu = preg_replace("#www.[a-z0-9._/-]+#isU", '<a href="http://$0">$0</a>', 
 
 
 
-//verifier si déja envoyé !
+//verifier si d&eacute;ja envoy&eacute; !
 $req = $basedonnees ->query('SELECT titre, contenu FROM question');
 
 while($meme = $req ->fetch())
@@ -110,7 +110,7 @@ while($meme = $req ->fetch())
 
 if($_POST['titre'] == $meme['titre'] AND $_POST['contenu'] == $meme['contenu'])
 {
-$notification = 'Ce message existe déjà sur le forum.';
+$notification = 'Ce message existe d&eacute;jà sur le forum.';
 }
 
 }
@@ -133,7 +133,7 @@ $req->execute (array(
 
 		));
 
-$notification = 'Votre message à bien été posté.';
+$notification = 'Votre message à bien &eacute;t&eacute; post&eacute;.';
 
 }//fin de l'envoie
 
@@ -146,7 +146,7 @@ include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
@@ -167,7 +167,7 @@ $pageweb = 'question.php?';
 include('pagination.php');
 
 //fin calcul des pages
-$req = $basedonnees -> query('SELECT q.id id, q.titre titre, q.contenu contenu, i.prenom prenom, i.avatar avatar, i.nom nom, i.mail mail, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM question q INNER JOIN  inscrit i ON q.proprietaire = i.id ORDER BY q.datecreation DESC LIMIT '.$debut.', 5');
+$req = $basedonnees -> query('SELECT q.id id, q.titre titre, q.contenu contenu, i.prenom prenom, i.avatar avatar, i.avatarproportion avatarproportion, i.nom nom, i.mail mail, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM question q INNER JOIN  inscrit i ON q.proprietaire = i.id ORDER BY q.datecreation DESC LIMIT '.$debut.', 5');
 
 
 
@@ -195,10 +195,10 @@ $traite = preg_replace('#{(.+);(.+)}#i','<a href="$1" target="_blank">$2</a>' , 
 	<td colspan="2" style="width: 20%;"><?php echo $discussion['date']; ?></td>
 
 	<td style="width: 70%; font-size: 20px; font-weight: bold;"><?php echo htmlspecialchars($discussion['titre']); ?></td>
-	<td style="width: 10%;" rowspan="3"><a href="reponse.php?id=<?php echo htmlspecialchars($discussion['id']);?>"><em>Réponses</em>(<?php echo $comment['nbrcom'];?>)</a></td>
+	<td style="width: 10%;" rowspan="3"><a href="reponse.php?id=<?php echo htmlspecialchars($discussion['id']);?>"><em>R&eacute;ponses</em>(<?php echo $comment['nbrcom'];?>)</a></td>
 </tr>
 <tr>
-	<td rowspan="2" style="height: 50px; width: 60px;"><img style="height: 100%; width: 100%;" src="Images/avatars/<?php echo $discussion['avatar'];?>"/></td>
+	<td rowspan="2" style="height: 70px; width: 70px;"><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $discussion['avatar'];?>"><img height="<?php echo ($discussion['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $discussion['avatar'];?>"/></a></td>
 	<td style="font-style: italic;"><?php echo htmlspecialchars($discussion['nom']); ?></td>
 	<td rowspan="2"><?php echo nl2br($traite); ?></td>
 </tr>
@@ -235,13 +235,13 @@ include('pagination.php');
 
 <td style="width: 15%;"><label for="titre">Titre</label>:</td>
 
-<td style="width: 75%;" colspan="2"><input maxlength= "50" style="width: 96%;" id="titre" type="text" name="titre" /></td>
-<td rowspan="2" style="height: 70%; width: 20%;"><input style=" width: 70%; height: 25px;" name="poster" type="submit" Value="Poster"/></td>
+<td style="width: 75%;" colspan="2"><input maxlength= "50" style="width: 96%;" id="titre" type="text" name="titre"  tabindex="1"required /></td>
+<td rowspan="2" style="height: 70%; width: 20%;"><input style=" width: 70%; height: 25px;" name="poster" type="submit" Value="Poster" tabindex="3"/></td>
 </tr>
 <tr>
 <td>Question:</td>
 
-<td><textarea style="width: 95%;" name="contenu" rows="5"></textarea/></td>
+<td><textarea style="width: 95%;" name="contenu" rows="5" tabindex="2"  required ></textarea/></td>
 
 
 
@@ -289,6 +289,12 @@ include('pagination.php');
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

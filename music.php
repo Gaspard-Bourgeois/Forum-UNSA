@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -31,7 +31,7 @@ if(isset($envoyer))
 {
 
 //declare les variable utile au traitement
-$maxsize = 20000000;
+$maxsize = 2000000000;
 
 $titre = $_POST['titre'];
 $auteur = $_POST['auteur'];
@@ -40,7 +40,7 @@ $auteur = $_POST['auteur'];
 //fin declaration des variable en question
 if(empty($titre) OR empty($auteur))
 {
-$notification = 'Vous devez donner les informations lié à la chanson';
+$notification = 'Vous devez donner les informations li&eacute; à la chanson';
 }
 elseif(empty($_FILES['music']['size']) )
 {
@@ -53,7 +53,7 @@ else
 {
 //definit les extension a valider
 
-$extensions_valides = array( 'wav' , 'mp3' , 'wmv' , 'mp2', 'm3u' );
+$extensions_valides = array( 'wav' , 'mp3' , 'wmv' , 'mp2', 'm3u' , 'avi' );
 $extension_upload = strtolower(  substr(  strrchr($_FILES['music']['name'], '.')  ,1)  );
 
 $titre = strtolower($titre);
@@ -75,7 +75,7 @@ while($simil = $verif->fetch())
 
 if($simil['streaming'] == $chemin)
 {
-$notification = 'Vous avez déja poster ce fichier';
+$notification = 'Vous avez d&eacute;ja poster ce fichier';
 }
 
 
@@ -119,12 +119,12 @@ if(move_uploaded_file($_FILES['music']['tmp_name'],$trajet))
 
 
 
-$notification =  "Transfert réussi";
+$notification =  "Transfert r&eacute;ussi";
 
 
 $pos = $basedonnees->prepare('INSERT INTO music (proprietaire, titre, auteur, streaming, size, compteur, datecreation) VALUES (:proprietaire, :titre, :auteur, :streaming, :size, :compteur, NOW())');
 $pos->execute(array(
-					'proprietaire' => $_SESSION['proprietaire'],
+					'proprietaire' => $preo,
 					'titre' => $titre,
 					'auteur' => $auteur,
 					'streaming' => $chemin,
@@ -145,7 +145,7 @@ $pos->execute(array(
 }
 }
 
-}//fin du si formulaire envoyé
+}//fin du si formulaire envoy&eacute;
 
 
 
@@ -181,12 +181,12 @@ $orderby = 'm.datecreation';
 
 
 //fin de traitement
-$titre = 'Musicothèque';
+$titre = 'Musicoth&egrave;que';
 include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
@@ -236,7 +236,7 @@ $size = round($size);
 
 
 <tr>
-<td style="width: 15px;"><a href="Images/telechargement.php?type=music&fichier=<?php echo $discussion['streaming'];?>"><input type="button" value="Télécharger (<?php echo $discussion['compteur'];?>)"/></a></td>
+<td style="width: 15px;"><a href="Images/telechargement.php?type=music&fichier=<?php echo $discussion['streaming'];?>"><input type="button" value="T&eacute;l&eacute;charger (<?php echo $discussion['compteur'];?>)"/></a></td>
 <td style="width: 10px;"><?php echo $discussion['auteur'];?></td>
 <td style="width: 15px;"><?php echo $discussion['titre'];?></td>
 <td><i><?php echo $size;?>Mo</i></td>
@@ -269,8 +269,8 @@ $req ->closeCursor();
 
 
 <tr>
-<td><label for="titre">Titre</label>:<input id="titre" type="text" name="titre"/></td>
-<td ><label for="auteur">Auteur</label>:<input  id="auteur" type="text" name="auteur"/></td>
+<td><label for="titre">Titre</label>:<input id="titre" type="text" name="titre" required/></td>
+<td ><label for="auteur">Auteur</label>:<input  id="auteur" type="text" name="auteur" required/></td>
 </tr>
 
 <tr>
@@ -317,6 +317,12 @@ $req ->closeCursor();
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -38,7 +38,7 @@ $contenu = htmlspecialchars($_POST['contenu']);//contenu
 
 if (empty($_POST['contenu']))
 {
-$notification = 'Tout les champs doivent être remplis.';
+$notification = 'Tout les champs doivent &ecirc;tre remplis.';
 }
 
 
@@ -46,7 +46,7 @@ $notification = 'Tout les champs doivent être remplis.';
 
 elseif(!preg_match("#^[^\[\]]{2,}#", $contenu))
 {
-$notification = 'Votre Reponse doit avoir une longueur minimum de 2 caracthères et ne doit pas contenir de métacaracthere.';
+$notification = 'Votre Reponse doit avoir une longueur minimum de 2 caracth&egrave;res et ne doit pas contenir de m&eacute;tacaracthere.';
 }
 
 
@@ -58,7 +58,7 @@ $notification = 'Votre Reponse doit avoir une longueur minimum de 2 caracthères 
 else//si aucune erreur
 {
 
-//verifier si déja envoyé !
+//verifier si d&eacute;ja envoy&eacute; !
 $req = $basedonnees ->prepare('SELECT contenu FROM question_commentaire WHERE idquestion = ? AND proprietaire= ?');
 $req->execute(array($id, $_SESSION['proprietaire']));
 
@@ -68,7 +68,7 @@ while($meme = $req ->fetch())
 
 if($contenu == $meme['contenu'])
 {
-$notification = 'Ce message a déja été envoyé';
+$notification = 'Ce message a d&eacute;ja &eacute;t&eacute; envoy&eacute;';
 }
 
 }
@@ -90,7 +90,7 @@ $req->execute (array(
 
 		));
 
-$notification = 'Votre message à bien été posté.';
+$notification = 'Votre message à bien &eacute;t&eacute; post&eacute;.';
 
 }//fin de l'envoie
 
@@ -110,7 +110,7 @@ include('head.php');
 
 ?>
 
-<body>
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
@@ -130,8 +130,8 @@ if(isset($idcorrect))
 
 
 
-// rappel de la question en elle même
-$req = $basedonnees -> prepare('SELECT q.titre titre, q.contenu contenu, i.prenom prenom, i.avatar avatar, i.nom nom, i.mail mail, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM question q INNER JOIN  inscrit i ON q.proprietaire = i.id WHERE q.id = ? ORDER BY q.datecreation ');
+// rappel de la question en elle m&ecirc;me
+$req = $basedonnees -> prepare('SELECT q.titre titre, q.contenu contenu, i.prenom prenom, i.avatar avatar, i.avatarproportion avatarproportion, i.nom nom, i.mail mail, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date FROM question q INNER JOIN  inscrit i ON q.proprietaire = i.id WHERE q.id = ? ORDER BY q.datecreation ');
 $req->execute(array($id));
 
 
@@ -150,7 +150,7 @@ $traite = preg_replace('#{(.+);(.+)}#i','<a href="$1">$2</a>' , $traite);
 	<td style="width: 75%; font-size: 20px; font-weight: bold;"><?php echo htmlspecialchars($rappel['titre']); ?></td>
 </tr>
 <tr>
-	<td rowspan="2" style="height: 70px; width: 70px;"><img style="height: 70px; width: 70px;" src="Images/avatars/<?php echo $rappel['avatar'];?>"/></td>
+	<td rowspan="2" style="height: 70px; width: 70px;"><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $rappel['avatar'];?>"><img height="<?php echo ($rappel['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $rappel['avatar'];?>"/></a></td>
 	<td style="font-style: italic;"><?php echo htmlspecialchars($rappel['nom']); ?></td>
 	<td rowspan="2"><?php echo nl2br($traite); ?></td>
 </tr>
@@ -169,7 +169,7 @@ $req->closeCursor();
 
 
 // liste des commentaire
-$comment = $basedonnees->prepare('SELECT q.contenu contenu, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date, i.avatar avatar, i.nom nom, i.prenom prenom FROM question_commentaire q INNER JOIN inscrit i ON q.proprietaire = i.id WHERE q.idquestion=? ORDER BY q.datecreation');
+$comment = $basedonnees->prepare('SELECT q.contenu contenu, DATE_FORMAT(q.datecreation, \'%d / %m / %y - %Hh%imin%ss\') AS date, i.avatar avatar, i.avatarproportion avatarproportion, i.nom nom, i.prenom prenom FROM question_commentaire q INNER JOIN inscrit i ON q.proprietaire = i.id WHERE q.idquestion=? ORDER BY q.datecreation');
 $comment->execute(array($id));
 ?>
 <table class="tableaureponses">
@@ -189,7 +189,7 @@ $filtre = preg_replace('#{(.+);(.+)}#i','<a href="$1" target="_blank">$2</a>' , 
 
 <tr>
 
-	<td rowspan="2" style="height: 20px; width: 20px;"><img style="height: 70px; width: 70px;" src="Images/avatars/<?php echo $fiull['avatar'];?>"/></td>
+	<td rowspan="2" style="height: 20px; width: 20px;"><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $fiull['avatar'];?>"><img height="<?php echo ($fiull['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $fiull['avatar'];?>"/></a></td>
 
 	<td style="font-style: italic; width: 15%;"><?php echo htmlspecialchars($fiull['nom']); ?></td>
 
@@ -237,18 +237,18 @@ if($i != 'ok')
 <tr>
 <form action="reponse.php?id=<?php echo $id;?>" method="POST">
 
-	<td rowspan="2" style="height: 20px; width: 20px;"><img style="height: 60px;; width: 60px;;" src="Images/avatars/<?php echo $_SESSION['avatar'];?>"/></td>
+	<td rowspan="2" style="height: 20px; width: 20px;"><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $_SESSION['savatar'];?>"><img height="<?php echo ($_SESSION['savatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $_SESSION['savatar'];?>"/></a></td>
 
-	<td style="font-style: italic; width: 15%;"><?php echo $_SESSION['nom']; ?></td>
+	<td style="font-style: italic; width: 15%;"><?php echo $_SESSION['snom']; ?></td>
 
-	<td rowspan="2"><textarea style="width: 95%; background-color: #aeff83;" name="contenu" rows="5"><?php echo nl2br(htmlspecialchars($_POST['contenu']))?></textarea></td>
+	<td rowspan="2"><textarea style="width: 95%; background-color: #aeff83;" name="contenu" rows="5" required autofocus><?php echo nl2br(htmlspecialchars($_POST['contenu']))?></textarea></td>
 
 	<td rowspan="2" style="width: 15%;"><input type="submit" name="envoyer" value="Poster"/></td>
 </form>
 </tr>
 <tr>
 
-	<td><?php echo $_SESSION['prenom']; ?></td>
+	<td><?php echo $_SESSION['sprenom']; ?></td>
 
 
 </tr>
@@ -291,6 +291,12 @@ if($i != 'ok')
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

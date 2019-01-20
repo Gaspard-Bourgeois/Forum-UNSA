@@ -121,6 +121,14 @@ h2{
 
 }
 
+.rouge
+{
+
+color: red;
+
+}
+
+
 .logbox h1 {
 
 	font-size:15px !important;
@@ -365,9 +373,9 @@ pass {  height:100px; }
 
 passfield { }
 
-.bad-pass {
+#bad-pass {
 
-    display: none;
+
 
     color: red;
 }

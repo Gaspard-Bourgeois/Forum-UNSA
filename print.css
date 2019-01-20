@@ -1,0 +1,9 @@
+@page { size: portrait; } 
+@page { margin: 2cm; } 
+#monchat{display: none;}
+#monchat {display: none;}
+
+#nonafficher{display: none;}
+body{background-color: white; background-image: none;}
+
+

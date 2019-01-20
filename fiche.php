@@ -1,16 +1,16 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['permission']))
+if(!isset($_SESSION['spermission']))
 {
 include('mdp.php');
-//mot de passe securité
+//mot de passe securit&eacute;
 }
 
 else
 {
 include('stock.php');
-//connection base de donnée
+//connection base de donn&eacute;e
 ?>
 
 <?php
@@ -39,8 +39,8 @@ $fiche = htmlspecialchars($_POST['fiche']);
 
 
 
-$bdd1 = $basedonnees->prepare('UPDATE fiche SET contenu = :fiche WHERE id= :id');
-$bdd1->execute(array(
+$fake = $basedonnees->prepare('UPDATE fiche SET contenu = :fiche WHERE id= :id');
+$fake->execute(array(
 					'fiche' => $fiche,
 					'id' => $nbr));
 
@@ -54,7 +54,11 @@ include('head.php');
 
 ?>
 
-<body>
+<script language="Javascript">
+function imprimer(){window.print();}
+</script>
+
+</head><body  onload="javascript:change_onglet('<?php echo $_SESSION['songletchat'];?>');">
 
 <?php
 
@@ -84,36 +88,88 @@ else
 if($demande == 'apercu')
 {
 
-
-
-
-$bdd2 = $basedonnees->prepare('SELECT i.nom nom, i.prenom prenom, i.avatar avatar, f.titre titre, f.contenu contenu FROM fiche f INNER JOIN inscrit i ON f.proprietaire = i.id WHERE f.id_lien = :id');
-$bdd2->execute(array('id' => $nbr));
-
-while($bdd2_i = $bdd2->fetch())
-{
 ?>
 
-<td>Auteur:</td>
-<td><img style="width: 70px; height: 70px;" src="Images/avatars/<?php echo $bdd2_i['avatar'];?>"/></td>
-<td><?php echo htmlspecialchars($bdd2_i['nom']); ?></td>
-<td><?php echo htmlspecialchars($bdd2_i['prenom']); ?></td>
-</tr>
-<tr>
-<td colspan="4"><center><?php echo $bdd2_i['titre']; ?></center></td>
-</tr>
-<tr>
-<td colspan ="4" style="width: 100%;"><?php echo $bdd2_i['text']; ?></td>
+<p>Si vous ne sauvegarder pas votre fichier au bout de 5 minutes une autre personne pourrai vous empecher de le faire.</p>
 
+
+<table>
+<tr>
+<?php
+
+$pardon = $basedonnees-> prepare('SELECT titre, contenu, datecreation, id_lien FROM fiche WHERE id = ?');
+$pardon->execute(array($nbr));
+
+while($conte = $pardon->fetch())
+{
+
+
+$auteur = $basedonnees->prepare('SELECT i.avatar avatar, i.avatarproportion avatarproportion, i.nom nom, i.prenom prenom FROM lien l INNER JOIN inscrit i ON l.proprietaire = i.id WHERE l.id = ?');
+$auteur->execute(array($conte['id_lien']));
+
+while($proprio = $auteur->fetch())
+{
+$avatar = $proprio['avatar'];
+$prenom = $proprio['prenom'];
+$nom = $proprio['nom'];
+
+}
+$auteur->closeCursor();
+
+?>
+
+<td><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $avatar;?>"><img height="<?php echo ($proprio['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $avatar;?>"/></a></td>
+<td><?php echo htmlspecialchars($nom); ?></td>
+<td><?php echo htmlspecialchars($prenom); ?></td>
+</tr>
+<tr>
+<td colspan="2" style="font-size: 50px;"><center><?php echo $conte['titre']; ?></center></td>
+<td><?php echo $conte['datecreation'];?></td>
 
 <?php
-$contenu1 = nl2br($bdd2_i['contenu']);
+$var1 = nl2br($conte['contenu']);
 }
-$bdd2->closeCursor();
+$pardon->closeCursor();
+
+$var2 = preg_replace('#<br />#', '', $var1);
+
+if($_GET['convertir'])
+{
+
+$var2 = preg_replace('#[ù]#', '=', $var2);
+$var2 = preg_replace('#[ü]#', '->' , $var2);
+$var2 = preg_replace('#[÷]#', '<', $var2);
+$var2 = preg_replace('#[ù]#', '>', $var2);
+$var2 = preg_replace('#[ø]#', '!=', $var2);
+$var2 = preg_replace('#[ú]#', '-', $var2);
+
+}
 
 ?>
 </tr>
+<form>
+<tr>
+
+
+<td rowspan="3"><div onclick="imprimer()"><?php echo nl2br($var2);?></div></td>
+
+<td id="nonafficher"><a href="fiche.php?demande=<?php echo $demande;?>&nbr=<?php echo $nbr;?>&convertir=avantimpression" ><input name="B1" type="button" value="Convertir"></a></td>
+
+</tr>
+<tr>
+
+<td><div id="nonafficher"><input name="B1" onclick="imprimer()" type="button" value="Imprimer"/></div></td>
+</tr>
+<tr>
+<td><div id="nonafficher"><a href="fiche.php?demande=modification&nbr=<?php echo $nbr;?>"><input type="button" value="Editer"/></a></div></td>
+
+</tr>
+</form>
 </table>
+
+<a href="partage.php?theme=ti">Retour au menu TI</a>
+
+
 
 
 
@@ -147,43 +203,43 @@ if($demande == 'modification')
 <tr>
 <?php
 
-//$bdd3 = $basedonnees->prepare('SELECT i.nom nom, i.prenom prenom, i.avatar avatar, f.titre titre, f.contenu contenu FROM fiche f INNER JOIN inscrit i ON f.proprietaire = i.id WHERE f.id_lien = ?');
-$bdd3 = $basedonnees-> prepare('SELECT titre, contenu, datecreation, id_lien FROM fiche WHERE id = ?');
-$bdd3->execute(array($nbr));
+//$pardon = $basedonnees->prepare('SELECT i.nom nom, i.prenom prenom, i.avatar avatar, f.titre titre, f.contenu contenu FROM fiche f INNER JOIN inscrit i ON f.proprietaire = i.id WHERE f.id_lien = ?');
+$pardon = $basedonnees-> prepare('SELECT titre, contenu, datecreation, id_lien FROM fiche WHERE id = ?');
+$pardon->execute(array($nbr));
 
-while($bdd3_i = $bdd3->fetch())
+while($conte = $pardon->fetch())
 {
 
 
-$bdd4 = $basedonnees->prepare('SELECT i.avatar avatar, i.nom nom, i.prenom prenom FROM lien l INNER JOIN inscrit i ON l.proprietaire = i.id WHERE l.id = ?');
-$bdd4->execute(array($bdd3_i['id_lien']));
+$auteur = $basedonnees->prepare('SELECT i.avatar avatar, i.avatarproportion avatarproportion i.nom nom, i.prenom prenom FROM lien l INNER JOIN inscrit i ON l.proprietaire = i.id WHERE l.id = ?');
+$auteur->execute(array($conte['id_lien']));
 
-while($bdd4_i = $bdd4->fetch())
+while($proprio = $auteur->fetch())
 {
-$avatar = $bdd4_i['avatar'];
-$prenom = $bdd4_i['prenom'];
-$nom = $bdd4_i['nom'];
+$avatar = $proprio['avatar'];
+$prenom = $proprio['prenom'];
+$nom = $proprio['nom'];
 
 }
-$bdd4->closeCursor();
+$auteur->closeCursor();
 
 ?>
 
 <td>Auteur:</td>
-<td><img style="width: 70px; height: 70px;" src="Images/avatars/<?php echo $avatar;?>"/></td>
+<td><a onclick="new MaxBox(this, '639', '356'); return false;" href="Images/avatars/<?php echo $avatar;?>"><img height="<?php echo ($proprio['avatarproportion']*70);?>" width="70" src="Images/avatars/<?php echo $avatar;?>"/></a></td>
 <td><?php echo htmlspecialchars($nom); ?></td>
 <td><?php echo htmlspecialchars($prenom); ?></td>
 </tr>
 <tr>
-<td colspan="2" style="font: 20px;"><center><?php echo $bdd3_i['titre']; ?></center></td>
-<td><?php echo $bdd3_i['datecreation'];?></td>
+<td colspan="2" style="font: 20px;"><center><?php echo $conte['titre']; ?></center></td>
+<td><?php echo $conte['datecreation'];?></td>
 
 <?php
-$contenu1 = nl2br($bdd3_i['contenu']);
+$var1 = nl2br($conte['contenu']);
 }
-$bdd3->closeCursor();
+$pardon->closeCursor();
 
-$contenu1_r = preg_replace('#<br />#', '', $contenu1);
+$var2 = preg_replace('#<br />#', '', $var1);
 
 ?>
 </tr>
@@ -194,24 +250,18 @@ $contenu1_r = preg_replace('#<br />#', '', $contenu1);
 
 <tr>
 <td><input type="submit" name="envoyer" value="sauvegarder" /></td>
-<td><a href="http://forum-unsa.fr/fiche.php"><input type="button" name="test" value="actualiser" /></a></td>
+<td><a href="fiche.php?demande=apercu&nbr=<?php echo $nbr;?>"><input type="button" name="test" value="Apercu" /></a></td>
 
 </tr>
 <tr>
-<td ><p style="color: white; margin-left: 10px;">Lorsque vous copier coller un texte de <a href="http://forum-unsa.fr/liencommentaire.php?id=23">TI Program Editor</a>, <br/>
+<td ><p style="color: grey; margin-left: 10px;">Lorsque vous copier coller un texte de <a href="http://forum-unsa.fr/liencommentaire.php?id=23">TI Program Editor</a>, <br/>
 laisser le comme telle pour que les autres utilisateurs puisse le copier dans leur editeur personelle ! Plus rapidement<br/>
-<br/>
-Pour information lorsqu'il s'agit de code source de calculette provennant de la TI:<br/>
-ù		=<br/>
-ü		-><br/>
-÷		<<br/>
-ù		><br/>
-ø		different<br/></p>
+</p>
 </td>
 
 </tr>
 <tr>
-<td colspan ="2" style="width: 100%;"><textarea style="width: 100%;" rows="30" name="fiche"><?php echo $contenu1_r; ?></textarea></td>
+<td colspan ="2" style="width: 100%;"><textarea style="width: 100%;" rows="30" name="fiche"  required><?php echo $var2; ?></textarea></td>
 </tr>
 
 </table>
@@ -243,6 +293,12 @@ Pour information lorsqu'il s'agit de code source de calculette provennant de la 
 
 
 
+
+
+
+<?php
+include('agenda.php');
+?>
 
 
 

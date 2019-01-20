@@ -1,41 +1,28 @@
 body
 {
-width: 100%;
-background: url(Images/fond13.jpg) no-repeat center;
 
+background: url(Images/fond14.jpg) no-repeat;
+   background-color:     white;
+   background-position: top;
 margin-top: 10%;
-   background-color:     #545454;
-   color: black;
-   background-attachment: absolute;
+
+   background-attachment: fixed;
    background-repeat:    no-repeat;
    background-position:  center;
-}
 
+}
 
 #contenu
 {
-position: absolute;
-margin-left: 200px;
-margin-right: 80px;
-
+margin-left: 212px;
 }
 
 #menu
 {
 
-position: absolute;
-width: 100%;
-height: 20%;
-float: right;
-opacity: 0.8;
-background-color: silver;
-font: black;
-
-top: 5%;
-right: 1%;
-left: 1%;
-z-index: 2;
-display: block;
+float: left;
+width: 202px;
+color: rgb(112, 112, 112);
 
 
 }
@@ -58,42 +45,63 @@ text-decoration: none;
 
 #menu2
 {
+	position: fixed;
+margin-left: 1px;
+
+
+display: block;
+float: left;
+ margin-top: 10px;
 	background-color: #b5d3da;
-	margin: auto;
 	padding: 5px;
 	text-align: center;
 	vertical-align: middle;
-	position: absolute;
-	height: 10%;
-	float: right;
-	opacity: 0.8;
-	font: black;
-	top: 7%;
-	right: 1%;
-	left: 1%;
 	z-index: 3;
+	top: 3px;
 }
 
+#menu2 li
+{
 
+display: block;
+height: 20px;
+
+padding-top: 12px;
+font-size: 20px;
+line-height: 20px;
+}
+
+#menu2 li :hover
+{
+background-color: #fff;
+text-shadow: 5px 5px 50px #b3b3b3;
+
+}
+
+@media screen and (max-height: 500px)
+{
 
 #menu2
 {
-position: absolute;
-margin-left: 1px;;
-width: 50px;
-
+height: 300px;
+width: 70px;
+display: table;
+}
 }
 
-#menu2 tr td
+#menu2 li
 {
 
+display: block;
+height: 20px;
 
-padding: 1px;
-background-color: #1badd2;
+padding-top: 12px;
+
+font-size: 20px;
 
 }
 
-#menu2 tr td :hover
+#menu2 li :hover
 {
 background-color: #fff;
 text-shadow: 5px 5px 50px #b3b3b3;
@@ -215,7 +223,7 @@ background-color: #c7ffca;
 }
 
 
-/*====================================== tableaureponse ===========================*/
+/*====================================== tableaureponseSSSSS ===========================*/
 
 .tableaureponses
 {
@@ -273,6 +281,80 @@ height: 20px;
 border: 1px solid #88e5fd;
 }
 
+/*====================================== tableauagenda ===========================*/
+
+#tableauagenda
+{
+border: 0.5px solid #b53cda;
+background-color: ##ffffab;
+}
+
+#tableauagenda tr td
+{
+padding: 2px;
+margin: 5 px;
+background-color: white;
+}
+
+
+/*====================================== tableau tout ===========================*/
+
+#tableautout
+{
+
+background-color: #ffcbff;
+}
+
+#tableautout tr td
+{
+padding: 2px;
+margin: 5 px;
+background-color: white;
+}
+
+
+
+
+/*====================================== tableau   agenda   formaulaire ===========================*/
+
+.tableauagendaformulaire
+{
+border: 1px solid #008db4;
+background-color: #b5efda;
+}
+
+.tableauagendaformulaire tr td
+{
+padding: 2px;
+margin: 5 px;
+background-color: white;
+}
+
+
+
+
+/*====================================== tableau   agenda   formaulaire ===========================*/
+
+.tableauindex
+{
+border: 1px solid #008db4;
+background-color: #afafaf;
+opacity: 0.8;
+font-size: 10px;
+color: #2a4eef;
+margin-bottom: 30px;
+}
+
+.tableauindex tr td
+{
+
+}
+
+
+
+
+
+
 
 
 
@@ -295,7 +377,7 @@ display: block;
 
 
 
-/*=============================================================   chat    ==============================================*/
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   chat   $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
 
 
@@ -331,7 +413,7 @@ height: 250px;
 
 
 
-/*=======================================================les onglet javascript   =========================================*/
+
 
         .onglet
          {
@@ -345,6 +427,7 @@ height: 250px;
                  cursor:pointer;
 
          }
+
          .onglet_0
          {
 
@@ -373,7 +456,7 @@ border: 1px solid black;
 		 #all_onglets
 		 {
 position: fixed;
-width: 400px;
+width: 30%;
 
 bottom: 0.2px;
 right: 0.2px;
@@ -391,8 +474,115 @@ margin: auto;
 
 
 
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$     Mon agenda  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
 
+
+
+#mon_agenda
+{
+
+background-color: #40c5e6;
+
+
+}
+
+#mon_agenda tr td
+{
+font: Verdana 10px;
+
+}
+
+
+
+#agenda2
+{
+height: 200px;
+ overflow: scroll;
+margin-bottom: 2px;
+}
+
+#agenda3
+{
+height: 250px;
+ overflow: scroll;
+
+}
+
+
+
+
+        .agenda
+         {
+                display:inline-block;
+				width: 80px;
+
+                 margin-left:5px;/*definir l'espacement*/
+
+                 padding:3px;
+
+                 cursor:pointer;
+
+         }
+		 .mechantpapa
+		 {
+
+		 cursor:pointer;
+		 display: inline-block;
+
+
+
+		 }
+         .agenda_0
+         {
+
+background-color : #acded5;
+border: 1px solid black;
+         }
+         .agenda_1
+         {
+
+                 border-bottom:0px solid black;
+                 padding-bottom: 0px;
+
+         }
+         .contain_agenda
+         {
+				background-color : white;
+                 margin-top:-1px;
+                 padding: 3px;
+				 margin-left: 1px;
+                 display:none;
+				 border:3px solid #40c5e6;
+				 font-size: 12px;
+
+         }
+
+
+		 #all_agendas
+		 {
+position: fixed;
+width: 30%;
+
+top: 0.2px;
+right: 0.2px;
+
+opacity : 0,3;
+
+z-index: 6;
+display: block;
+margin: auto;
+
+
+		 }
+
+
+
+
+
+
+
+/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$   fenetre  $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/
 
 
 
@@ -422,7 +612,7 @@ margin: auto;
                  padding-bottom:4px;
 
          }
-         .contenu_fenetre
+         .donee_fenetre
          {
 				opacity: 0,6;
 
