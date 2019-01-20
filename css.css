@@ -1,0 +1,30 @@
+fieldset
+{
+box-shadow: 5 5 4px #555;
+}
+
+table a
+{
+text-decoration: none;
+}
+
+#menu
+{
+background-color: #f5db8a;
+ width: 100%;
+ height: 20px;
+ padding: 5px;
+ text-align: center;
+}
+
+#menu tr td
+{
+margin: 1px;
+background-color: #d7c079;
+}
+
+#menu tr td :hover
+{
+margin: 0.4px;
+background-color: #fff;
+}
