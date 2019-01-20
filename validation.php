@@ -52,8 +52,13 @@ $permission = 'utilisateur';
 
 
 
-$transfert = $basedonnees ->prepare('INSERT INTO inscrit(login, mdp, sexe, nom, prenom, mail, datenaissance, news, datecreation, permission) VALUES(:login, :mpd, :sexe, :nom, :prenom, :mail, :datenaissance, :news, :datecreation)');
+
+$adresse = '0';
+
+
+$transfert = $basedonnees ->prepare('INSERT INTO inscrit(avatar, login, mdp, sexe, nom, prenom, mail, datenaissance, news, datecreation, permission) VALUES(:avatar, :login, :mpd, :sexe, :nom, :prenom, :mail, :datenaissance, :news, :datecreation, :permission)');
 $transfert->execute(array(
+							'avatar' => $adresse,
 							'login' => $alors['login'],
 							'mpd' => $passwd,
 							'sexe' => $alors['sexe'],

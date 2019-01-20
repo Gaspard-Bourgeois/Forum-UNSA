@@ -33,7 +33,7 @@ include('head.php');
 include('menu.php');
 ?>
 
-<p>Bienvenue sur la page d'accueil du site</p>
+<p><center>Bienvenue</center></p>
 
 
 
@@ -70,7 +70,9 @@ include('menu.php');
 
 
 
-
+<?php
+include('chat.php');
+?>
 
 </body>
 </html>

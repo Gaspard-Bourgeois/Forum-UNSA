@@ -23,15 +23,24 @@
 
 
 <div class="logbox">
-  <h2>Accès Site Web</h2>
+  <h2>Accès Unsa</h2>
   <form action="index.php" method="post" id="pass" class="form-password">
-    <input type="text" name="login" placeholder="login" maxlength="20" style="baground-color: #bdd76e;" />
-    <input type="password" name="mdp" />
-    <input type="submit" name="entrer" value="Entrer"/>
+<table id="inscript"> 
+  <tr>
+    <td><input type="text" name="login" placeholder="login" maxlength="20" style="baground-color: #bdd76e;" /></td>
+	</tr>
+	<tr>
+    <td><input type="password" name="mdp" /></td>
+		</tr>
+	<tr>
+    <td><input type="submit" name="entrer" value="Entrer"/></td>
+	</tr>
+	
   </form>
   <span class="bad-pass"  > </span><br />
+</table>
+<table id="inscript">
 
-<table id="inscription"> 
 <tr>
 <td><a href="inscription.php"><input class="inscription" type="button" value="Inscription" /></a></td>
 </tr>

@@ -1,3 +1,51 @@
+body
+{
+width: 100%;
+background: url(Images/fond13.jpg) no-repeat center;
+
+margin-top: 10%;
+   background-color:     #545454;
+   color: black;
+   background-attachment: absolute;
+   background-repeat:    no-repeat;
+   background-position:  center;
+}
+
+
+#contenu
+{
+position: absolute;
+margin-left: 200px;
+margin-right: 80px;
+
+}
+
+#menu
+{
+
+position: absolute;
+width: 100%;
+height: 20%;
+float: right;
+opacity: 0.8;
+background-color: silver;
+font: black;
+
+top: 5%;
+right: 1%;
+left: 1%;
+z-index: 2;
+display: block;
+
+
+}
+
+
+
+
+
+
+
 fieldset
 {
 box-shadow: 5 5 4px #555;
@@ -8,23 +56,386 @@ table a
 text-decoration: none;
 }
 
-#menu
+#menu2
 {
-background-color: #f5db8a;
- width: 100%;
- height: 20px;
- padding: 5px;
- text-align: center;
+	background-color: #b5d3da;
+	margin: auto;
+	padding: 5px;
+	text-align: center;
+	vertical-align: middle;
+	position: absolute;
+	height: 10%;
+	float: right;
+	opacity: 0.8;
+	font: black;
+	top: 7%;
+	right: 1%;
+	left: 1%;
+	z-index: 3;
 }
 
-#menu tr td
+
+
+#menu2
 {
-margin: 1px;
-background-color: #d7c079;
+position: absolute;
+margin-left: 1px;;
+width: 50px;
+
 }
 
-#menu tr td :hover
+#menu2 tr td
 {
-margin: 0.4px;
+
+
+padding: 1px;
+background-color: #1badd2;
+
+}
+
+#menu2 tr td :hover
+{
 background-color: #fff;
+text-shadow: 5px 5px 50px #b3b3b3;
+
 }
+
+#menu2 tr td a
+{
+color: black;
+font-size: 25px;
+
+}
+
+
+
+
+
+h4
+{
+vertical-align: middle;
+
+}
+
+
+h5
+{
+text-align: center;
+font : Verdana;
+
+}
+
+/*====================================== les styles tableau =========================================*/
+.tableauquestion, .tableaulien, .tableaucompte, .tableaufichier, .tableaureponse, .tableaureponses
+{
+
+
+border-radius: 20px;
+width: 100%;
+}
+
+.tableauquestion tr td, .tableaulien tr td, .tableaucompte tr td, .tableaufichier tr td, .tableaureponse tr td, .tableaureponses tr td
+{
+padding: 5px;
+margin: 10 px;
+border-radius: 2px;
+
+
+}
+
+
+
+
+/*======================================tableau question============================*/
+
+
+
+.tableauquestion
+{
+border: 4px solid #8da580;
+background-color: white;
+
+
+}
+
+.tableauquestion tr td
+{
+background-color: white;
+
+}
+
+.tableauquestion :hover
+{
+background-color: #f5f5f5;
+
+}
+
+
+
+/*======================================tableau lien============================*/
+
+
+.tableaulien
+{
+
+
+background-color: #d9ffc5;
+
+}
+
+
+.tableaulien tr td
+{
+
+background-color: white;
+
+}
+
+/*====================================== dm ===========================*/
+
+#dm
+{
+
+background-color: #d9ffc5;
+
+}
+
+
+/*====================================== tableaufichier ===========================*/
+
+
+.tableaufichier
+{
+border: 2px solid #a1ffa7;
+}
+
+.tableaufichier tr td
+{
+background-color: #c7ffca;
+}
+
+
+/*====================================== tableaureponse ===========================*/
+
+.tableaureponses
+{
+border: 5px double #aeff83;
+}
+
+.tableaureponses tr td
+{
+background-color: white;
+}
+
+/*====================================== tableaureponse ===========================*/
+
+.tableaureponse
+{
+border: 2px dotted #008db4;
+background-color: #00c9ff;
+}
+
+.tableaureponse tr td
+{
+background-color: white;
+}
+
+
+/*====================================== tableau compte ===========================*/
+
+.tableaucompte
+{
+
+background-color: #effafc;
+
+}
+
+.tableaucompte tr td, .tableauonglet
+{
+empty-cells: show;
+margin: 4px;
+padding: 4px;
+background-color: #c3f0fc;
+}
+
+.tableaucompte tr th
+{
+width: 25%;
+border-radius: 10px;
+margin: 4px;
+padding: 4px;
+height: 20px;
+}
+
+
+.tableaucompte tr th:hover
+{
+border: 1px solid #88e5fd;
+}
+
+
+
+
+#notification
+{
+position: fixed;
+width: 20%;
+height: 20%;
+float: right;
+opacity: 0.8;
+background-color: silver;
+font: black;
+
+bottom: 3%;
+right: 1%;
+z-index: 5;
+display: block;
+
+}
+
+
+
+/*=============================================================   chat    ==============================================*/
+
+
+
+#mon_chat
+{
+
+background-color: #40c5e6;
+
+
+}
+
+#mon_chat tr td
+{
+font: Verdana 10px;
+
+}
+
+
+
+#chat2
+{
+height: 200px;
+ overflow: scroll;
+margin-bottom: 2px;
+}
+
+#chat3
+{
+height: 250px;
+ overflow: scroll;
+
+}
+
+
+
+/*=======================================================les onglet javascript   =========================================*/
+
+        .onglet
+         {
+                display:inline-block;
+				width: 80px;
+
+                 margin-left:5px;/*definir l'espacement*/
+
+                 padding:3px;
+
+                 cursor:pointer;
+
+         }
+         .onglet_0
+         {
+
+background-color : #acded5;
+border: 1px solid black;
+         }
+         .onglet_1
+         {
+
+                 border-bottom:0px solid black;
+                 padding-bottom: 0px;
+
+         }
+         .contenu_onglet
+         {
+				background-color : white;
+                 margin-top:-1px;
+                 padding: 3px;
+				 margin-left: 1px;
+                 display:none;
+				 border:3px solid #40c5e6;
+				 font-size: 12px;
+         }
+
+
+		 #all_onglets
+		 {
+position: fixed;
+width: 400px;
+
+bottom: 0.2px;
+right: 0.2px;
+
+opacity : 0,3;
+
+z-index: 6;
+display: block;
+margin: auto;
+
+
+		 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .fenetre
+         {
+                 display:inline-block;
+
+
+                 padding:3px;
+                 border:1px solid black;
+                 cursor:pointer;
+         }
+         .fenetre_0
+         {
+
+
+         }
+         .fenetre_1
+         {
+                 background: #adddd6;
+                 border-bottom:0px solid black;
+                 padding-bottom:4px;
+
+         }
+         .contenu_fenetre
+         {
+				opacity: 0,6;
+
+                 margin-top:-1px;
+                 padding:5px;
+                 display:none;
+         }
+		 #all_fenetres
+		 {
+		 display: block;
+		 margin: auto;
+		 text-align: center;
+
+		 width: 500px;
+		 }
+

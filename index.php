@@ -1,6 +1,15 @@
 <?php
 session_start();
 
+if(isset($_GET['logout']))
+{
+session_destroy();
+session_start();
+
+}
+
+
+
 
 include('stock.php');
 //connection base de donnée
@@ -15,13 +24,16 @@ $login = htmlspecialchars($_POST['login']);
 
 $mdp = htmlspecialchars($_POST['mdp']);
 
+$login = strtolower($login);
+$mdp = strtolower($mdp);
+
 
 
 if(empty($login) OR empty($mdp))
 {
 $notification = 'Tous les champs doivent être remplis.';
 }
-elseif(!preg_match("#^[a-zA-Z0-9]{4,20}$#", $login))
+elseif(!preg_match("#^[a-zA-Z0-9éèï]{4,20}$#", $login))
 {
 $notification = 'Votre login doit contenir entre 5 et 20 caractères';
 }
@@ -41,7 +53,7 @@ include('stock.php');
 //connection base de donnée
 
 
-$connexion = $basedonnees -> query('SELECT login, mdp, sexe, nom, prenom, mail, permission FROM inscrit');
+$connexion = $basedonnees -> query('SELECT id, avatar, login, mdp, sexe, nom, prenom, mail, news, DATE_FORMAT(datenaissance, \'%d-%m-%y\') AS date, permission, chat FROM inscrit');
 //conexion base de donnée inscrit
 
 
@@ -58,12 +70,19 @@ if($login == $identifiant['login'] AND $passwd == $identifiant['mdp'])
 
 
 //debut de difinition des sessions
+
+
+$_SESSION['proprietaire'] = $identifiant['id'];
+$_SESSION['avatar'] = $identifiant['avatar'];
 $_SESSION['login'] = $identifiant['login'];
 $_SESSION['sexe'] = $identifiant['sexe'];
 $_SESSION['nom'] = $identifiant['nom'];
 $_SESSION['prenom'] = $identifiant['prenom'];
 $_SESSION['mail'] = $identifiant['mail'];
+$_SESSION['date'] = $identifiant['date'];
+$_SESSION['news'] = $identifiant['news'];
 $_SESSION['permission'] = $identifiant['permission'];
+$_SESSION['chat'] = $identifiant['chat'];
 
 
 //fin de definition des sessions
@@ -91,12 +110,13 @@ $connexion ->closeCursor();
 //fin du traitement des donnée envoyer par l'utilisateur
 
 
-if(empty($_SESSION['permission']))
+if(!isset($_SESSION['permission']))
 {
 include('mdp.php');
 //mot de passe securité
 }
-
+else
+{
 
 
 //fin de traitement
@@ -111,10 +131,8 @@ include('head.php');
 
 include('menu.php');
 ?>
-
-<p>Bienvenue sur la page d'accueil du site</p>
-
-
+<div id="contenu">
+<p><center>Bienvenue sur la page d'accueil du site</center></p>
 
 
 
@@ -149,8 +167,15 @@ include('menu.php');
 
 
 
+</div>
 
+<?php
+include('chat.php');
+?>
 
 </body>
 </html>
+<?php
 
+}
+?>

@@ -183,8 +183,8 @@ $boundary = "-----=".md5(rand());
 $sujet= ''.$info['prenom'].' '.$info['nom'].'';
 
 //=====Création du header de l'e-mail.
-$header = "From: \"Petit nouveau\"<forum-unsa.fr@gmail.com>".$passage_ligne;
-$header.= "Reply-to: \"Eviter de répondre\" <forum-unsa.fr@gmail.com>".$passage_ligne;
+$header = "From: \"Petit nouveau\"<unsa@gmail.com>".$passage_ligne;
+$header.= "Reply-to: \"Eviter de répondre\" <unsa@gmail.com>".$passage_ligne;
 $header.= "MIME-Version: 1.0".$passage_ligne;
 $header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 //==========

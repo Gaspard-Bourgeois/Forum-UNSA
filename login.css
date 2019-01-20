@@ -1,14 +1,17 @@
 body{
 	overflow:auto;
+	background-color: #5ad4f6;	
 	}
 h2{
 	font-size:24px;
 	margin-bottom:20px;
 	}
+
+
+
+
 	
 #full {
-
-	background: url(Images/mdp.jpg) center top;
 
 	position:absolute;
 
@@ -21,7 +24,7 @@ h2{
 	bottom:0;
 
 	text-align:center;
-
+	z-index: 10;
 }
 
 #log_container {
@@ -98,7 +101,7 @@ h2{
 
 	padding: 10px 10px;
 
-	width:400px;
+	width:600px;
 
 	border-radius: 10px;
 
@@ -152,7 +155,7 @@ form#pass input {
 
 }
 
-#inscription
+#inscript
 {
 
 	margin-left:auto;
@@ -164,18 +167,18 @@ form#pass input {
 	width:400px;
 }
 
-#inscription a
+#inscript a
 {
 text-decoration: none;
 }
 
 .inscription
 {
-		padding:10px 20px;
+	padding:10px 20px;
 
 	background:url(Images/inscription.png) left center no-repeat;
 
-	width:240px;
+	width: 400px;
 
 	border:1px solid #CCC;
 
@@ -374,5 +377,22 @@ passfield { }
 	color: red;
 
 	text-align:center;
+
+}
+
+#notification
+{
+position: fixed;
+width: 20%;
+height: 20%;
+float: right;
+opacity: 0.8;
+background-color: silver;
+font: black;
+
+bottom: 3%;
+right: 1%;
+z-index: 10;
+display: block;
 
 }

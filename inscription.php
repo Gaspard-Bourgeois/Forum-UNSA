@@ -48,9 +48,9 @@ elseif(empty($charte))
 $notification = 'Vous devez accepter la charte de confidentialité pour vous inscrire';
 }
 
-elseif(!preg_match("#^[a-zA-Z0-9]{4,15}$#", $login))
+elseif(!preg_match("#^[a-zA-Z0-9éèï]{2,}$#", $login))
 {
-$notification = 'Votre login doit être composé 5 à 15 caractheres.';
+$notification = 'Votre login doit être composé au minimum de 2 caractheres.';
 }
 
 elseif(!preg_match("#^[a-zA-Z0-9]{4,20}$#", $mdp))
@@ -58,12 +58,12 @@ elseif(!preg_match("#^[a-zA-Z0-9]{4,20}$#", $mdp))
 $notification = 'Votre mot de passe doit être composé de 5 à 20 caractheres.';
 }
 
-elseif(!preg_match("#^[a-zA-Z]{2,30}$#", $nom))
+elseif(!preg_match("#^[a-zA-Zéè]{1,}$#", $nom))
 {
 $notification = 'Votre nom doit être composé de 3 à 30 caracthères.';
 }
 
-elseif(!preg_match("#^[a-zA-Z]{2,30}$#", $prenom))
+elseif(!preg_match("#^[a-zA-Zéèï]{1,}$#", $prenom))
 {
 $notification = 'Votre prénom doit faire au minimu 3 à 30 caracthères.';
 }
@@ -164,12 +164,15 @@ while($zero = $date->fetch())
 if($zero['datenaissance'] == 0)
 {
 $notification = 'Votre date de naissance est invalide.';
+$badnaissance = 'oui';
 }
 }
+
+$date->closeCursor();
 //fin de la boucle de verification de date
 
 
-if(isset($notification))
+if(isset($badnaissance))
 {
 $zero = '0';
 $jack = $basedonnees->prepare('DELETE FROM confirmation WHERE datenaissance= ? ');
@@ -269,8 +272,13 @@ if(mail($mail, $sujet, $message, $header))
 {
 
 $notification = 'Pour valider votre compte vous devez maintenant vous connecter sur votre boite mail.';
-}
+echo 'Pour valider votre compte vous devez maintenant vous connecter sur votre boite mail.';
 
+}
+else
+{
+$notification = 'Il est impossible de vous envoyer un mail a cette adresse';
+}
 
 
 
@@ -293,9 +301,32 @@ $notification = 'Pour valider votre compte vous devez maintenant vous connecter 
 
 }
 //fin de traitement
-$titre = 'Inscription';
-include('head.php');
+
+
+
+
+//fin de traitement
+
 ?>
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Inscription</title>
+	   <link rel="icon" href="Images/icone.png" />
+       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	   <link rel="stylesheet" media="screen" type="text/css" title="css" href="login.css" />
+	   <?php
+	   if(isset($notification))
+		{
+	   ?>
+	   <script>
+		alert('<?php echo $notification;?>');
+		</script>
+	   <?php
+	   }
+	   ?>
+	</head>
+
 
 <body>
 
@@ -304,6 +335,13 @@ include('head.php');
 
 
 
+
+<div id="full" >
+<div id="log_container" >
+
+
+
+<div class="logbox">
 
 
 
@@ -317,7 +355,7 @@ include('head.php');
 
 <table>
 <tr>
-<td><label for="login">Login</label>:</td><td><input type="text" id="login" name="login" size="20" maxlength="15" placeholder="ex: Jay5" value="<?php echo htmlspecialchars($_POST['login']);?>"></td>
+<td><label for="login">Login</label>:</td><td><input type="text" id="login" name="login" size="20" maxlength="15" placeholder="ex: Jay5" value=""></td>
 <td rowspan="3"><p>Les majuscules et minuscules ne sont pas prises en compte</p></td>
 </tr>
 
@@ -336,13 +374,17 @@ include('head.php');
 <table>
 
 <tr>
-<td><label for="nom">Nom</label>:</td><td><input type="text" id="nom" name="nom" size="28" maxlength="20" placeholder="ex: Statham" value="<?php echo htmlspecialchars($_POST['nom']);?>" /></td>
+
+<td><label for="prenom">Prénom</label>:</td><td><input type="text" id="prenom" name="prenom" size="28" maxlength="20" placeholder="ex: Jason" value=""/></td>
 
 
 </tr>
 <tr>
 
-<td><label for="prenom">Prénom</label>:</td><td><input type="text" id="prenom" name="prenom" size="28" maxlength="20" placeholder="ex: Jason" value="<?php echo htmlspecialchars($_POST['prenom']);?>"/></td>
+
+
+<td><label for="nom">Nom</label>:</td><td><input type="text" id="nom" name="nom" size="28" maxlength="20" placeholder="ex: Statham" value="" /></td>
+
 
 </tr>
 
@@ -354,14 +396,14 @@ include('head.php');
 </tr>
 <tr>
 
-<td><label for="mail">Adresse Mail</label>:</td><td><input type="text" id="mail" name="mail" size="28" maxlength="85" placeholder="ex: jays.stath@free.fr" value="<?php echo htmlspecialchars($_POST['mail']);?>"/></td>
+<td><label for="mail">Adresse Mail</label>:</td><td><input type="text" id="mail" name="mail" size="28" maxlength="85" placeholder="ex: jays.stath@free.fr" value=""/></td>
 
 </tr>
 <tr>
 
-<td><label for="datenaissance">Date de Naissance</label>:</td><td><input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance1" value="<?php echo htmlspecialchars($_POST['datenaissance1']);?>"/> /
-																	<input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance2" value="<?php echo htmlspecialchars($_POST['datenaissance2']);?>"/> /
-																	<input type="text" id="datenaissance" size="5" maxlength="4" name="datenaissance3" value="<?php echo htmlspecialchars($_POST['datenaissance3']);?>"/></td>
+<td><label for="datenaissance">Date de Naissance</label>:</td><td><input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance1" value=""/> /
+																	<input type="text" id="datenaissance" size="3" maxlength="2" name="datenaissance2" value=""/> /
+																	<input type="text" id="datenaissance" size="5" maxlength="4" name="datenaissance3" value=""/></td>
 
 </tr>
 
@@ -400,6 +442,18 @@ include('head.php');
 </h5>
 
 
+</div>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+    $("input[type=password]")[0].focus();
+});
+</script>
+
+
+
+</div>
+</div>
 
 
 
@@ -436,6 +490,11 @@ include('head.php');
 
 
 
+
+
+<?php
+include('notification.php');
+?>
 </body>
 </html>
 
